@@ -1,0 +1,91 @@
+1 - Setting up the Stack Navigation [inside of the App Navigator].
+
+2 - Creating a src folder which contains navigation folder and inside of it is the AppNavigator inside of the stack folder.
+
+3 - Another Folder inside src is of the Screens which holds all the Screens required inside of the Application.
+
+4 - Inside of the AppNavigator inside the stack
+    ```
+     we have NavigationContainer which have Stack.Navigator and Stack.Screen inside which are the basic Screens.
+    ```
+
+5 - Now we will be creating The Drawer Navigator which will be inside of HomeScreen.
+
+6 - Calling DrawerNavigator inside of the HomeScreen
+
+7 - Installed React-Native-Drawer
+
+8 - Then Have to Install React-Native-Reanimated
+
+9 - After Installing React-Native-Reanimated have to do some changes in the
+    babel.config.js file and have to change the plugins i.e. 
+    plugins: [
+      ...
+      'react-native-reanimated/plugin',
+    ],
+
+10 - Now we need to clean the Cache by using npm start -- --reset-cache
+
+11 - Instantiating createDrawerNavigator in the drawerNavigator file inside of the drawer folder.
+
+12 - Now we dont need NavigatorContainer as it is already inside of the AppNavigator and everything is going inside of it.
+
+13 - we only want Drawer.Navigator and inside it Drawer.Screen which will hold all the screens.
+
+14 - Error arrised which invloved different SDK version of react-reanimated
+
+15 - Now inside of the DrawerNavigator file we have to pass a new Screen i.e we have done MainScreen
+
+16 - DrawerNavigation is done.
+
+17 - Now Creating a bottom folder which have BottomNavigator file inside of the navigation folder
+
+18 - Now passed the BottomNavigator inside of the MainScreen.
+
+19 - npm install @react-navigation/bottom-tabs
+
+20 - Instantiating BottomTabNavigator inside the BottomNavigator file.
+
+21 - now we will have Bottom.Navigator inside of it we will have Bottom.Screen 
+
+22 - Creating the Main Screens of the app inside the appScreens folder. 
+
+23 - created three screens for now inside of the appScreens these will be important and main svcreens of the application.
+
+24 - now passing the screens to the BottomNavigator file.
+
+25 - Making the Header Visible inside the BottomNavigator as we have made the header as false in drawer Navigator
+
+26 - Bottom Navigation is done
+
+27 - Now we want the Tab Navigator Icon 
+
+28 - Marking All the header visible property as false 
+
+29 - Will be creating a custom Drawer.
+
+30 - Now as we have made the text in the center of the screens
+
+31 - Now i want to open the drawer on the click of the Text
+
+32 - Done using onPress={() => navigation.openDrawer()} command
+
+33 - Created a CustomDrawer file inside of the drawer
+
+34 - Now we need to add CustomDrawer inside of the DrawerNavigator we just need to pass drawerContent 
+    inside of the Drawer.Navigator i.e drawerContent={props => <CustomDrawer {...props}/>}
+    just need to pass props inside of the component
+
+35 - Custom Drawer is developed.
+
+36 - Adding the Icons on the application using expo vector icons.
+
+
+37 - In the BottomNavigator file inside of the bottom Folder
+
+38 - in the options sections we just need to put tabBarIcon and then return the Icon.
+
+39 - Imported the icons and returned them inside the Bottomnavigator file.
+
+40 - Now i want the icons to be focused so there is a property isndie the tabBarIcon
+    style= {{color : tabIcon.focused ? 'purple' : 'black'}}
