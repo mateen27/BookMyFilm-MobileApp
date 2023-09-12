@@ -2,8 +2,8 @@ import { StyleSheet, Text, SafeAreaView, TouchableOpacity, Image } from 'react-n
 import React from 'react'
 // importing the bars image
 import { Entypo } from '@expo/vector-icons';
-import MenuBlack from '../../images/menu.png'
-import MenuWhite from '../images/menuWhite.png'
+
+import Menu from '../../images/menuu.png'
 // importing notification icon
 import { Ionicons } from '@expo/vector-icons';
 // responsive font imports
@@ -16,6 +16,9 @@ import {
 //   importing a screen
 // import Notification from '../screens/AppScreens/Notification';
 
+// import for tailwind
+import tw from 'twrnc'
+
 const HeaderComponent: React.FC<{navigation: any}> = ({navigation}) => {
   return (
     <SafeAreaView style = {styles.headerContainer}>
@@ -23,7 +26,7 @@ const HeaderComponent: React.FC<{navigation: any}> = ({navigation}) => {
       <TouchableOpacity
       onPress={() => navigation.openDrawer()}
       ><Image 
-      source={MenuBlack}
+      source={Menu}
       style = {styles.headerMenu}
       /></TouchableOpacity>
 
@@ -33,7 +36,7 @@ const HeaderComponent: React.FC<{navigation: any}> = ({navigation}) => {
       {/* Notification Icon */} 
       <TouchableOpacity
       onPress={() => navigation.navigate('Notification')}
-      ><Ionicons name="notifications-outline" size={25} color="#0D0D0D" /></TouchableOpacity>
+      ><Ionicons name="notifications-outline" size={25} color="#f5f6fa" /></TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
     headerText : {
         fontSize : responsiveScreenFontSize(2.5) , 
         fontWeight : "bold" , 
-        color : '#0D0D0D' , //#0D0D0D  //#f5f6fa //#CAD5E2
+        color : '#f5f6fa' , //#0D0D0D  //#f5f6fa //#CAD5E2
     } , 
     headerMenu : {
         height: 22,

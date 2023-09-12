@@ -10,7 +10,7 @@ interface SplashScreenProps {
 const SplashScreen: React.FC<SplashScreenProps> = ({navigation}) => {
     useEffect(() => {
         setTimeout(() => {
-            navigation.navigate('Home')
+            navigation.navigate('OnBoarding')
         }, 3000);
     } , [])
   return (

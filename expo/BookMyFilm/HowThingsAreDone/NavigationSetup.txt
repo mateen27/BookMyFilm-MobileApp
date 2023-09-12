@@ -1,4 +1,4 @@
-1 - Setting up the Stack Navigation [inside of the App Navigator].
+1 - Setting up the Stack Navigation [inside of the App Navigator]
 
 2 - Creating a src folder which contains navigation folder and inside of it is the AppNavigator inside of the stack folder.
 
@@ -6,7 +6,7 @@
 
 4 - Inside of the AppNavigator inside the stack
     ```
-     we have NavigationContainer which have Stack.Navigator and Stack.Screen inside which are the basic Screens.
+     we have NavigationContainer which have Stack.Navigator and Stack.Screen inside which are the basic Screens
     ```
 
 5 - Now we will be creating The Drawer Navigator which will be inside of HomeScreen.
