@@ -16,9 +16,6 @@ import {
 //   importing a screen
 // import Notification from '../screens/AppScreens/Notification';
 
-// import for tailwind
-import tw from 'twrnc'
-
 const HeaderComponent: React.FC<{navigation: any}> = ({navigation}) => {
   return (
     <SafeAreaView style = {styles.headerContainer}>
@@ -45,7 +42,7 @@ export default HeaderComponent
 
 const styles = StyleSheet.create({
     headerContainer : {
-        marginVertical : '12%' , 
+        marginVertical : '5%' , 
         marginHorizontal : '5%' , 
         flexDirection : 'row' , 
         justifyContent : 'space-between' , 

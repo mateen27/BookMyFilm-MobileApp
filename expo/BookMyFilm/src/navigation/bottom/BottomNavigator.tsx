@@ -1,9 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../../screens/AppScreens/Home";
 import About from "../../screens/AppScreens/About";
 import Profile from "../../screens/AppScreens/Profile";
+import TicketIcon from "../../../images/ticket.png";
+import WatchIcon from "../../../images/watch.png";
+import WatchIconn from "../../../images/watchh.png";
+import { useNavigation } from "@react-navigation/native";
 
 // icons import
 import { AntDesign } from "@expo/vector-icons";
@@ -12,105 +16,118 @@ import { MaterialIcons } from "@expo/vector-icons";
 // user
 import { Feather } from "@expo/vector-icons";
 // ticket
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 // stream & chat
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { COLORS, FONTSIZE, SPACING } from "../../theme/theme";
+// for Video
+import { Octicons } from "@expo/vector-icons";
+import Search from "../../screens/AppScreens/Search";
+import Ticket from "../../screens/AppScreens/Ticket";
+import WatchMovies from "../../screens/AppScreens/WatchMovies";
 
-const BottomNavigator = () => {
+const BottomNavigator: React.FC<{ routeNavigation: any }> = ({
+  routeNavigation,
+}) => {
+  // console.log('Navigation in BottomNavigator:', routeNavigation);
   const Bottom = createBottomTabNavigator();
+
+  const navigation = useNavigation();
 
   return (
     <Bottom.Navigator
       screenOptions={{
-        tabBarInactiveBackgroundColor: "black",
-        tabBarActiveBackgroundColor: "#FA650F",
+        // tabBarInactiveBackgroundColor: "black",
+        // tabBarActiveBackgroundColor: "#FA650F",
+        tabBarHideOnKeyboard: true,
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: COLORS.Black,
+          borderWidth: 0,
+          height: SPACING.space_10 * 10,
+        },
       }}
     >
       <Bottom.Screen
         name="Home"
         component={Home}
         options={{
-          headerShown: false,
-          tabBarActiveTintColor: "#FFFFFF",
-          tabBarIcon: (tabIcon) => {
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, color, size }) => {
             return (
-              <AntDesign
-                name="home"
-                size={24}
-                color="#FFFFFF"
-                style={{ color: tabIcon.focused ? "black" : "white" }}
-              />
+              <View style={[styles.activeTabBackground, focused ? { backgroundColor: COLORS.Orange } : {}, { justifyContent: 'center', alignItems: 'center' }]}>
+                <Octicons
+                  name="video"
+                  size={FONTSIZE.size_24}
+                  color={COLORS.White}
+                />
+              </View>
             );
           },
         }}
       />
       <Bottom.Screen
-        name="Book Ticket"
-        component={About}
+        name="Search"
+        component={Search}
         options={{
-          headerShown: false,
-          tabBarActiveTintColor: "#FFFFFF",
-          tabBarIcon: (tabIcon) => {
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, color, size }) => {
             return (
-              <FontAwesome
-                name="ticket"
-                size={24}
-                color="white"
-                style={{ color: tabIcon.focused ? "black" : "white" }}
-              />
+              <View style={[styles.activeTabBackground, focused ? { backgroundColor: COLORS.Orange } : {}, { justifyContent: 'center', alignItems: 'center' }]}>
+                <AntDesign
+                  name="search1"
+                  size={FONTSIZE.size_24}
+                  color={COLORS.White}
+                />
+              </View>
             );
           },
         }}
       />
       <Bottom.Screen
-        name="Chat"
-        component={About}
+        name="Ticket"
+        component={Ticket}
         options={{
-          headerShown: false,
-          tabBarActiveTintColor: "#FFFFFF",
-          tabBarIcon: (tabIcon) => {
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, color, size }) => {
+            const imageSource = focused ? TicketIcon : TicketIcon;
+            const tabBarIconStyle = focused ? styles.activeTabIconBackground : {};
             return (
-              <Ionicons
-                name="chatbox-outline"
-                size={24}
-                color="white"
-                style={{ color: tabIcon.focused ? "black" : "white" }}
-              />
+              <View style={[tabBarIconStyle, { justifyContent: 'center', alignItems: 'center' }]}>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={() => navigation.navigate("Ticket")}>
+                  <Image source={imageSource} style={{
+                    resizeMode: "contain",
+                    width: 28,
+                    height: 28,
+                  }} />
+                </TouchableOpacity>
+              </View>
             );
           },
         }}
       />
+
       <Bottom.Screen
-        name="Stream"
-        component={About}
+        name="Watch"
+        component={WatchMovies}
         options={{
-          headerShown: false,
-          tabBarActiveTintColor: "#FFFFFF",
-          tabBarIcon: (tabIcon) => {
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, color, size }) => {
+            const imageSource = focused ? WatchIcon : WatchIcon;
+            const tabBarIconStyle = focused ? styles.activeTabIconBackground : {};
             return (
-              <Ionicons
-                name="videocam-outline"
-                size={24}
-                color="white"
-                style={{ color: tabIcon.focused ? "black" : "white" }}
-              />
-            );
-          },
-        }}
-      />
-      <Bottom.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          headerShown: false,
-          tabBarActiveTintColor: "#FFFFFF",
-          tabBarIcon: (tabIcon) => {
-            return (
-              <Feather
-                name="user"
-                size={24}
-                style={{ color: tabIcon.focused ? "black" : "white" }}
-              />
+              <View style={[tabBarIconStyle, { justifyContent: "center", alignItems: "center" }]}>
+                <Image
+                  source={imageSource}
+                  style={{
+                    resizeMode: "contain",
+                    width: 28,
+                    height: 28,
+                  }}
+                />
+              </View>
             );
           },
         }}
@@ -121,4 +138,22 @@ const BottomNavigator = () => {
 
 export default BottomNavigator;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  activeTabBackground: {
+    backgroundColor: COLORS.Black,
+    padding: SPACING.space_18,
+    borderRadius: SPACING.space_18 * 10,
+  },
+  activeTabIconBackground: {
+    backgroundColor: COLORS.Orange,
+    padding: SPACING.space_16,
+    borderRadius: SPACING.space_18 * 20,
+    color: COLORS.White,
+  },
+  ticketIcon: {
+    width: 26,
+    height: 26,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

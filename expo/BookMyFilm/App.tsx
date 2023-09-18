@@ -1,10 +1,12 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import AppNavigator from './src/navigation/stack/AppNavigator'
+import { NavigationContainer } from "@react-navigation/native";
 
 const App: React.FC<{}> = () => {
   return (
-    <AppNavigator/>
+    <NavigationContainer>
+      <AppNavigator />
+    </NavigationContainer>
   )
 }
 
