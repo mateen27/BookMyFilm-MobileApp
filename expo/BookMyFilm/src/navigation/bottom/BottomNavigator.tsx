@@ -43,6 +43,7 @@ const BottomNavigator: React.FC<{ routeNavigation: any }> = ({
         headerShown: false,
         tabBarStyle: {
           backgroundColor: COLORS.Black,
+          borderColor : COLORS.Black ,
           borderWidth: 0,
           height: SPACING.space_10 * 10,
         },

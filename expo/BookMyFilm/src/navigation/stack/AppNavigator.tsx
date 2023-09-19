@@ -13,6 +13,7 @@ import BottomNavigator from "../bottom/BottomNavigator";
 import Search from "../../screens/AppScreens/Search";
 import Ticket from "../../screens/AppScreens/Ticket";
 import WatchMovies from "../../screens/AppScreens/WatchMovies";
+import MovieDetails from "../../screens/AppScreens/MovieDetails";
 
 // stackNavigator
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,16 @@ const AppNavigator: React.FC<{}> = () => {
       <Stack.Screen
         name="Notification"
         component={Notification}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Seacrh"
+        component={Search}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MovieDetails"
+        component={MovieDetails}
         options={{ headerShown: false }}
       />
       {/* Bottom Navigator */}
