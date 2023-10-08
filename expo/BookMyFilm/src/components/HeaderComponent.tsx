@@ -28,7 +28,7 @@ const HeaderComponent: React.FC<{navigation: any}> = ({navigation}) => {
       /></TouchableOpacity>
 
       {/* Page Name Text */}
-      <Text style = {styles.headerText}>Home</Text>
+      <Text style = {styles.headerText}>Stream</Text>
 
       {/* Notification Icon */} 
       <TouchableOpacity

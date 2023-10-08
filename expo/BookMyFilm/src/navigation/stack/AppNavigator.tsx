@@ -14,6 +14,11 @@ import Search from "../../screens/AppScreens/Search";
 import Ticket from "../../screens/AppScreens/Ticket";
 import WatchMovies from "../../screens/AppScreens/WatchMovies";
 import MovieDetails from "../../screens/AppScreens/MovieDetails";
+import WatchMovie from "../../screens/AppScreens/WatchMovie";
+import StreamMovies from "../../screens/AppScreens/StreamMovies";
+import UpcomingMoviesDetails from "../../screens/AppScreens/UpcomingMoviesDetails";
+import WatchTrailer from "../../screens/AppScreens/WatchTrailer";
+import BookTickets from "../../screens/AppScreens/BookTickets";
 
 // stackNavigator
 const Stack = createNativeStackNavigator();
@@ -53,14 +58,31 @@ const AppNavigator: React.FC<{}> = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Stream"
+        component={StreamMovies}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="MovieDetails"
         component={MovieDetails}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="UpcomingMovieDetails"
+        component={UpcomingMoviesDetails}
         options={{ headerShown: false }}
       />
       {/* Bottom Navigator */}
       <Stack.Screen name="Bottom">
         {() => <BottomNavigator navigation={navigation} />}
       </Stack.Screen>
+
+      
+      <Stack.Screen name="WatchTrailer" component={WatchMovie} options={{headerShown : false}}/>
+
+      <Stack.Screen name="WatchMovies" component={WatchMovies} options={{headerShown : false}}/>
+
+      <Stack.Screen name="BookMovie" component={BookTickets} options={{headerShown : false}}/>
     </Stack.Navigator>
   );
 };

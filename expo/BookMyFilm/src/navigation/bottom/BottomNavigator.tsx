@@ -24,7 +24,8 @@ import { COLORS, FONTSIZE, SPACING } from "../../theme/theme";
 import { Octicons } from "@expo/vector-icons";
 import Search from "../../screens/AppScreens/Search";
 import Ticket from "../../screens/AppScreens/Ticket";
-import WatchMovies from "../../screens/AppScreens/WatchMovies";
+import WatchMovies from "../../screens/AppScreens/WatchMovie";
+import StreamMovies from "../../screens/AppScreens/StreamMovies";
 
 const BottomNavigator: React.FC<{ routeNavigation: any }> = ({
   routeNavigation,
@@ -112,7 +113,7 @@ const BottomNavigator: React.FC<{ routeNavigation: any }> = ({
 
       <Bottom.Screen
         name="Watch"
-        component={WatchMovies}
+        component={StreamMovies}
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused, color, size }) => {
