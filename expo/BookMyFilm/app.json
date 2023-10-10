@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "BookMyFilm",
-    "slug": "BookMyFilm",
+    "slug": "bookmyfilm",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.khanmateen27.BookMyFilm"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4f2a8984-f703-4e3f-a585-563fd14f65bd"
+      }
+    },
+    "owner": "khanmateen27"
   }
 }

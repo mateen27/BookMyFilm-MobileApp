@@ -83,6 +83,8 @@ const AppNavigator: React.FC<{}> = () => {
       <Stack.Screen name="WatchMovies" component={WatchMovies} options={{headerShown : false}}/>
 
       <Stack.Screen name="BookMovie" component={BookTickets} options={{headerShown : false}}/>
+
+      <Stack.Screen name="Ticket" component={Ticket} options={{headerShown : false}}/>
     </Stack.Navigator>
   );
 };

@@ -95,16 +95,15 @@ const BottomNavigator: React.FC<{ routeNavigation: any }> = ({
             const imageSource = focused ? TicketIcon : TicketIcon;
             const tabBarIconStyle = focused ? styles.activeTabIconBackground : {};
             return (
-              <View style={[tabBarIconStyle, { justifyContent: 'center', alignItems: 'center' }]}>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  onPress={() => navigation.navigate("Ticket")}>
-                  <Image source={imageSource} style={{
+              <View style={[tabBarIconStyle, { justifyContent: "center", alignItems: "center" }]}>
+                <Image
+                  source={imageSource}
+                  style={{
                     resizeMode: "contain",
                     width: 28,
                     height: 28,
-                  }} />
-                </TouchableOpacity>
+                  }}
+                />
               </View>
             );
           },
