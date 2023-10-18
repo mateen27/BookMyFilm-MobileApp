@@ -213,7 +213,7 @@ import {
         contentContainerStyle={styles.scrollViewContainer}
       >
         {/* opening the drawer on Icon Click which is the HeaderComponent */}
-        <HeaderComponent navigation={navigation} />
+        <HeaderComponent props={'Stream'} navigation={navigation} />
         {/* for the Search Field */}
         <View style={styles.inputHeaderContainer}>
           <InputHeader searchFunction={searchMoviesFunction} />

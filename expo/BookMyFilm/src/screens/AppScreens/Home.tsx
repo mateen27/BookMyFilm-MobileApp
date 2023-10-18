@@ -9,12 +9,13 @@ import {
   StatusBar,
   ActivityIndicator,
   FlatList,
+  BackHandler
 } from "react-native";
 
 // importing json data
 import UpcomingMoviesData from '../../data/UpcomingMovies.json';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState  } from "react";
 import HeaderComponent from "../../components/HeaderComponent";
 import { COLORS, SPACING } from "../../theme/theme";
 
@@ -44,9 +45,27 @@ const getUpcomingMovies = async () => {
   }
 };
 
-const Home: React.FC<{ navigation: any }> = ({ navigation }) => {
-  // state variables for the API
+const Home: React.FC<{ navigation: any , route: any }> = ({ navigation , route }) => {
 
+  // will exit app from main page.!
+  // useEffect(() => {
+  //   const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+  //     // Close the app if the current route is the login screen
+  //     if (navigation.currentRoute.name === 'Login') {
+  //       BackHandler.exitApp();
+  //     }
+
+  //     // Allow the app to navigate back to the previous screen otherwise
+  //     return true;
+  //   });
+
+  //   return () => {
+  //     // Remove the event listener when the component unmounts
+  //     BackHandler.removeEventListener('hardwareBackPress', backHandler);
+  //   };
+  // }, []);
+
+  // state variables for the API
   // for the movies
   const [upcomingMovies, setUpcomingMovies] =
     useState<any>(undefined);
@@ -71,6 +90,8 @@ const Home: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   // console.log('popular Movies',nowPlayingTVShows);
   // console.log(telguMovies);
+
+  // console.log(route.name);
   
 
   const searchMoviesFunction = () => {
@@ -109,7 +130,7 @@ const Home: React.FC<{ navigation: any }> = ({ navigation }) => {
       contentContainerStyle={styles.scrollViewContainer}
     >
       {/* opening the drawer on Icon Click which is the HeaderComponent */}
-      <HeaderComponent navigation={navigation} />
+      <HeaderComponent props={'Book Movies'} navigation={navigation} />
       {/* for the Search Field */}
       <View style={styles.inputHeaderContainer}>
         <InputHeader searchFunction={searchMoviesFunction} />

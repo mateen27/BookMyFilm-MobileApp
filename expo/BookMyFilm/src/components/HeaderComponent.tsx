@@ -16,7 +16,7 @@ import {
 //   importing a screen
 // import Notification from '../screens/AppScreens/Notification';
 
-const HeaderComponent: React.FC<{navigation: any}> = ({navigation}) => {
+const HeaderComponent: React.FC<{navigation: any , props: any}> = ({ navigation , props }) => {
   return (
     <SafeAreaView style = {styles.headerContainer}>
         {/* Menu Bar Icon */}
@@ -28,7 +28,7 @@ const HeaderComponent: React.FC<{navigation: any}> = ({navigation}) => {
       /></TouchableOpacity>
 
       {/* Page Name Text */}
-      <Text style = {styles.headerText}>Stream</Text>
+      <Text style = {styles.headerText}>{props}</Text>
 
       {/* Notification Icon */} 
       <TouchableOpacity

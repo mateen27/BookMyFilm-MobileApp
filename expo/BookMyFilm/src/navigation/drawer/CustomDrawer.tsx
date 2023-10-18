@@ -1,4 +1,4 @@
-import { StyleSheet , Text, View , Image } from 'react-native'
+import { StyleSheet , Text, View , Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { COLORS, FONTSIZE } from '../../theme/theme'
 // import { Switch } from 'react-native-switch';
@@ -8,7 +8,7 @@ import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
-const CustomDrawer = () => {
+const CustomDrawer = ({navigation} : any) => {
   return (
     <View style = {{backgroundColor : '#333' , flex : 1  }}>
 
@@ -28,7 +28,7 @@ const CustomDrawer = () => {
       {/* Explore Movies Search Movies */}
       <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
         <AntDesign name="search1" size={24} color="white" />
-        <Text style = {styles.homeText}>Search Movies</Text>
+        <TouchableOpacity style = {{justifyContent : 'center' , alignItems : 'center'}} onPress={() => navigation.navigate('Search')}><Text style = {styles.homeText}>Search Movies</Text></TouchableOpacity>
       </View>
 
       {/* Filter Movies by Category  */}
@@ -40,7 +40,7 @@ const CustomDrawer = () => {
       {/* Stream Movies */}
       <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
         <Ionicons name="ios-tv-sharp" size={24} color="white" />
-        <Text style = {styles.homeText}>Stream Movies</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('WelcomeRoomScreen')}><Text style = {styles.homeText}>Create Room</Text></TouchableOpacity>
       </View>
 
       {/* Book Tickets */}
@@ -58,13 +58,13 @@ const CustomDrawer = () => {
         {/* About Application */}
         <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
           <Entypo name="info-with-circle" size={24} color="white" />
-          <Text style = {styles.homeText}>About</Text>
+          <TouchableOpacity style = {{justifyContent : 'center' , alignItems : 'center'}} onPress={() => navigation.navigate('About')}><Text style = {styles.homeText}>About</Text></TouchableOpacity>
         </View>
 
         {/* Profile Section */}
         <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
           <Feather name="user" size={24} color="white" />
-          <Text  style = {styles.homeText}>Profile</Text>
+          <TouchableOpacity style = {{justifyContent : 'center' , alignItems : 'center'}} onPress={() => navigation.navigate('Profile')}><Text style = {styles.homeText}>Profile</Text></TouchableOpacity>
         </View>
     </View>
   )

@@ -19,6 +19,10 @@ import StreamMovies from "../../screens/AppScreens/StreamMovies";
 import UpcomingMoviesDetails from "../../screens/AppScreens/UpcomingMoviesDetails";
 import WatchTrailer from "../../screens/AppScreens/WatchTrailer";
 import BookTickets from "../../screens/AppScreens/BookTickets";
+import WelcomeRoomScreen from "../../screens/AppScreens/WelcomeRoomScreen";
+import LoginScreen from "../../screens/AppScreens/LoginScreen";
+import Profile from "../../screens/AppScreens/Profile";
+import About from "../../screens/AppScreens/About";
 
 // stackNavigator
 const Stack = createNativeStackNavigator();
@@ -38,6 +42,11 @@ const AppNavigator: React.FC<{}> = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Splash"
         component={SplashScreen}
         options={{ headerShown: false }}
@@ -53,7 +62,7 @@ const AppNavigator: React.FC<{}> = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Seacrh"
+        name="Search"
         component={Search}
         options={{ headerShown: false }}
       />
@@ -85,6 +94,12 @@ const AppNavigator: React.FC<{}> = () => {
       <Stack.Screen name="BookMovie" component={BookTickets} options={{headerShown : false}}/>
 
       <Stack.Screen name="Ticket" component={Ticket} options={{headerShown : false}}/>
+
+      <Stack.Screen name="WelcomeRoomScreen" component={WelcomeRoomScreen} options={{headerShown : false}}/>
+
+      <Stack.Screen name="Profile" component={Profile} options={{headerShown : false}}/>
+
+      <Stack.Screen name="About" component={About} options={{headerShown : false}}/>
     </Stack.Navigator>
   );
 };

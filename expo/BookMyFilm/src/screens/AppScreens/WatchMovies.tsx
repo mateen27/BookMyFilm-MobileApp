@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState , useEffect } from 'react';
-import { StyleSheet, Text, View , ScrollView , FlatList , ImageBackground , Dimensions, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View , ScrollView , FlatList , ImageBackground , Dimensions, ActivityIndicator , Button, TouchableOpacity } from 'react-native';
 import YoutubePlayer from 'react-native-youtube-iframe'
 import { WebView } from 'react-native-webview';
-import { COLORS, SPACING } from '../../theme/theme';
+import { COLORS, FONTSIZE, SPACING } from '../../theme/theme';
 import AppHeader from '../../components/AppHeader';
 import SubMovieCards from '../../components/SubMovieCards';
 import CategoryHeader from '../../components/CategoryHeader';
@@ -17,7 +17,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import * as React from 'react';
 import { Video, ResizeMode } from 'expo-av';
+// import VideoPlayer from 'react-native-video-player';
 import { LinearGradient } from "expo-linear-gradient";
+import * as ScreenOrientation from 'expo-screen-orientation'
 
 
 // for the responsive UI
@@ -31,6 +33,29 @@ export default function WatchMovie({ navigation, route }: any) {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   // console.log(route);
+
+  const [orientationIsLandscape , setOrientation] = useState(false);
+
+  useEffect(() => {
+    // Lock the orientation when the component mounts
+    async function lockOrientation() {
+      try {
+        await ScreenOrientation.lockAsync(
+          orientationIsLandscape
+            ? ScreenOrientation.OrientationLock.LANDSCAPE
+            : ScreenOrientation.OrientationLock.PORTRAIT
+        );
+      } catch (error) {
+        console.error('Error locking orientation:', error);
+      }
+    }
+
+    lockOrientation();
+  }, [orientationIsLandscape]);
+
+  const toggleOrientation = () => {
+    setOrientation(!orientationIsLandscape);
+  };
 
 // function to navigate to MovieDetails Page in the app
 const navigateToMovieDetails = (movieId: number) => {
@@ -63,6 +88,16 @@ const navigateToMovieDetails = (movieId: number) => {
         // controls={true}
         onPlaybackStatusUpdate={status => setStatus(() => status)}
       />
+      {/* <VideoPlayer
+      video={{ uri: movie_link }}
+      videoWidth={1600}
+      videoHeight={900}
+      autoplay={true}
+      // style={styles.video}
+    /> */}
+      <TouchableOpacity style = {{alignItems : 'flex-end'}} onPress={toggleOrientation}>
+        <Text style = {{ color : COLORS.White , fontSize : FONTSIZE.size_18 , width : 200 , backgroundColor:COLORS.primary , textAlign : 'center' , padding : 10 , borderRadius : 5}}>Change Orientation</Text>
+      </TouchableOpacity>
       </View>
       <StatusBar style="dark" hidden />
     </ScrollView>

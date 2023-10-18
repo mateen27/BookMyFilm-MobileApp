@@ -43,13 +43,16 @@ interface Color {
   WhiteRGBA50: string;
   WhiteRGBA32: string;
   WhiteRGBA15: string;
+  primary: string;
+  secondary: string;
+  blackSecondary: string;
 }
 
 export const COLORS: Color = {
   Black: '#000000',
   BlackRGB10: 'rgba(0,0,0,0.1)',
   Orange: '#FF0000', //#c0392b #FF5524
-  OrangeRGBA0: 'rgba(255,85,36,0)',
+  OrangeRGBA0: 'rgba(255,85,36,0)', //#ff3333
   Grey: '#333333',
   DarkGrey: '#0b0b0b',
   Yellow: '#E1CD17',
@@ -58,6 +61,9 @@ export const COLORS: Color = {
   WhiteRGBA50: 'rgba(255,255,255,0.50)',
   WhiteRGBA32: 'rgba(255,255,255,0.32)',
   WhiteRGBA15: 'rgba(255,255,255,0.15)',
+  primary: "#007260",
+  secondary: "#39B68D",
+  blackSecondary: "#1F1F1F"
 };
 
 interface FontFamily {
