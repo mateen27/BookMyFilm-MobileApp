@@ -7,6 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { shareAppLink } from '../../components/SocialShare';
 
 const CustomDrawer = ({navigation} : any) => {
   return (
@@ -52,7 +53,7 @@ const CustomDrawer = ({navigation} : any) => {
         {/* Invite Friends by Sending Messages  */}
         <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
           <Feather name="share-2" size={24} color="white" />
-          <Text style = {styles.homeText}>Invite Friends</Text>
+          <TouchableOpacity style = {{justifyContent : 'center' , alignItems : 'center'}} onPress={() => shareAppLink()}><Text style = {styles.homeText}>Invite Friends</Text></TouchableOpacity>
         </View>
 
         {/* About Application */}
