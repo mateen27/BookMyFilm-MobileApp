@@ -109,7 +109,7 @@ import {
             }}
           >
             <Text style={{ marginHorizontal: 2 , color : '#ffffff' }}>Don't Have An Account?</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
                 <Text style={{ color: "#87CEEB" }}>Signup</Text></TouchableOpacity>
           </View>
         </ScrollView>

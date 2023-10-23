@@ -23,6 +23,7 @@ import WelcomeRoomScreen from "../../screens/AppScreens/WelcomeRoomScreen";
 import LoginScreen from "../../screens/AppScreens/LoginScreen";
 import Profile from "../../screens/AppScreens/Profile";
 import About from "../../screens/AppScreens/About";
+import SignUp from "../../screens/AppScreens/SignUp";
 
 // stackNavigator
 const Stack = createNativeStackNavigator();
@@ -36,14 +37,19 @@ const AppNavigator: React.FC<{}> = () => {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="OnBoarding"
         component={OnBoardingScreen}
         options={{ headerShown: false }}
-      />
+      />*/}
       <Stack.Screen
         name="Login"
         component={LoginScreen}
+        options={{ headerShown: false }}
+      /> 
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
         options={{ headerShown: false }}
       />
       <Stack.Screen

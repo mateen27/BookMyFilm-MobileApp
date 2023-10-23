@@ -1,193 +1,437 @@
-// import React, { useState } from "react";
-// import Icon from "react-native-vector-icons/FontAwesome";
-// import {
-//   StyleSheet,
-//   Text,
-//   View,
-//   TextInput,
-//   TouchableOpacity,
-// } from "react-native";
-// import {
-//   responsiveScreenHeight,
-//   responsiveScreenWidth,
-//   responsiveScreenFontSize,
-// } from "react-native-responsive-dimensions";
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  TextInput,
+  TouchableOpacity,
+  SafeAreaView,
+  Button,
+  StyleSheet , 
+  ScrollView
+} from "react-native";
+import React, { useState } from "react";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import COLORS from '../constants/colors';
+import { Ionicons } from "@expo/vector-icons";
+import Checkbox from 'expo-checkbox';
+import { COLORS } from "../../theme/theme";
+// import Button from '../components/Button';
+import {
+    responsiveScreenHeight,
+    responsiveScreenWidth,
+    responsiveScreenFontSize,
+  } from "react-native-responsive-dimensions";
 
-// import { Formik, Form, Field } from "formik";
-// import * as Yup from "yup";
+const SignUp = ({ navigation }: any) => {
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  return (
+    <ScrollView>    
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.Black }}>
+        <View style={{ flex: 1, marginHorizontal: 22 , marginVertical : '8%' }}>
+            <View style={{ marginVertical: 22 }}>
+            <Text
+                style={{
+                fontSize: 22,
+                fontWeight: "bold",
+                marginVertical: 12,
+                color: COLORS.White, // COLORS.black
+                }}
+            >
+                Create Account
+            </Text>
 
-// const SignupSchema = Yup.object().shape({
-//   name: Yup.string()
-//     .min(6, "Too Short!")
-//     .max(50, "Too Long!")
-//     .required("Please Enter Your Full Name"),
-//   email: Yup.string()
-//     .email("Invalid email")
-//     .required("Please Enter Your Email"),
-//   password: Yup.string()
-//     .min(8)
-//     .required('Please Enter your password')
-// });
+            <Text
+                style={{
+                fontSize: 16,
+                color: COLORS.WhiteRGBA75,
+                }}
+            >
+                Connect with your friend today!
+            </Text>
+            </View>
 
-// const SignupUI = () => {
-//   //this for password 1
-//   const [password, setPassword] = useState("");
-//   const [showPassword, setShowPassword] = useState(false);
+            <View style={{ marginBottom: 12 }}>
+            <Text
+                style={{
+                fontSize: 16,
+                fontWeight: 400,
+                marginVertical: 8,
+                color : COLORS.WhiteRGBA50
+                }}
+            >
+                Name
+            </Text>
 
-//   const toggleShowPassword = () => {
-//     setShowPassword(!showPassword);
-//   };
+            <View
+                style={{
+                width: "100%",
+                height: 48,
+                borderColor: COLORS.WhiteRGBA32,
+                borderWidth: 1,
+                borderRadius: 8,
+                alignItems: "center",
+                justifyContent: "center",
+                paddingLeft: 22,
+                }}
+            >
+                <TextInput
+                placeholder="Enter your Name"
+                placeholderTextColor={COLORS.WhiteRGBA50}
+                keyboardType="email-address"
+                style={{
+                    width: "100%",
+                    color : COLORS.WhiteRGBA75
+                }}
+                />
+            </View>
+            </View>
+            <View style={{ marginBottom: 12 }}>
+            <Text
+                style={{
+                fontSize: 16,
+                fontWeight: 400,
+                marginVertical: 8,
+                color : COLORS.WhiteRGBA50
+                }}
+            >
+                Email address
+            </Text>
 
-//   //this is for password 2
-//   const [password2, setPassword2] = useState("");
-//   const [showPassword2, setShowPassword2] = useState(false);
+            <View
+                style={{
+                width: "100%",
+                height: 48,
+                borderColor: COLORS.WhiteRGBA32,
+                borderWidth: 1,
+                borderRadius: 8,
+                alignItems: "center",
+                justifyContent: "center",
+                paddingLeft: 22,
+                }}
+            >
+                <TextInput
+                placeholder="Enter your email address"
+                placeholderTextColor={COLORS.WhiteRGBA50}
+                keyboardType="email-address"
+                style={{
+                    width: "100%",
+                    color : COLORS.WhiteRGBA75
+                }}
+                />
+            </View>
+            </View>
 
-//   const toggleShowPassword2 = () => {
-//     setShowPassword2(!showPassword2);
-//   };
+            <View style={{ marginBottom: 12 }}>
+            <Text
+                style={{
+                fontSize: 16,
+                fontWeight: 400,
+                marginVertical: 8,
+                color : COLORS.WhiteRGBA75
+                }}
+            >
+                Mobile Number
+            </Text>
 
-//   return (
-//     <Formik
-//       initialValues={{
-//         name: "",
-//         email: "",
-//         mobile: "",
-//         password: "",
-//         confirmPassword: "",
-//       }}
-//       validationSchema={SignupSchema}
-//     >
-//       {({
-//         values,
-//         errors,
-//         touched,
-//         handleChange,
-//         setFieldTouched,
-//         isValid,
-//         handleSubmit,
-//       }) => (
-//         <View style={styles.container}>
-//           <Text
-//             style={{ fontSize: responsiveScreenFontSize(5), marginBottom: 5 }}
-//           >
-//             Let's Get Started !
-//           </Text>
-//           <Text
-//             style={{ color: "grey", fontSize: responsiveScreenFontSize(2) }}
-//           >
-//             Create An Account to Get All The Features
-//           </Text>
+            <View
+                style={{
+                width: "100%",
+                height: 48,
+                borderColor: COLORS.WhiteRGBA32,
+                borderWidth: 1,
+                borderRadius: 8,
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingLeft: 22,
+                }}
+            >
+                <TextInput
+                placeholder="+91"
+                placeholderTextColor={COLORS.WhiteRGBA50}
+                keyboardType="numeric"
+                style={{
+                    width: "12%",
+                    borderRightWidth: 1,
+                    borderLeftColor: "grey",
+                    height: "100%",
+                }}
+                />
 
-//           <View style={{ marginTop: 30 }}>
-//             <TextInput
-//               style={styles.textbox}
-//               placeholder=" User Name"
-//               value={values.name}
-//               onChangeText={handleChange("name")}
-//             />
-//             {errors.name && <Text>{errors.name}</Text>}
-//             <TextInput style={styles.textbox} placeholder=" Email" />
-//             <TextInput style={styles.textbox} placeholder=" Phone" />
+                <TextInput
+                placeholder="Enter your phone number"
+                placeholderTextColor={COLORS.WhiteRGBA50}
+                keyboardType="numeric"
+                style={{
+                    width: "80%",
+                    color : COLORS.WhiteRGBA75
+                }}
+                />
+            </View>
+            </View>
 
-//             <TextInput
-//               style={styles.textbox}
-//               placeholder=" Password"
-//               secureTextEntry={!showPassword}
-//               value={password}
-//               onChangeText={setPassword}
-//             />
+            <View style={{ marginBottom: 12 }}>
+            <Text
+                style={{
+                fontSize: 16,
+                fontWeight: 400,
+                marginVertical: 8,
+                color : COLORS.WhiteRGBA75
+                }}
+            >
+                Password
+            </Text>
 
-//             <TouchableOpacity
-//               onPress={toggleShowPassword}
-//               style={styles.showPasswordButton}
-//             >
-//               <Icon name={showPassword ? "unlock" : "lock"} size={20} />
-//             </TouchableOpacity>
+            <View
+                style={{
+                width: "100%",
+                height: 48,
+                borderColor: COLORS.WhiteRGBA32,
+                borderWidth: 1,
+                borderRadius: 8,
+                alignItems: "center",
+                justifyContent: "center",
+                paddingLeft: 22,
+                }}
+            >
+                <TextInput
+                placeholder="Enter your password"
+                placeholderTextColor={COLORS.WhiteRGBA50}
+                secureTextEntry={isPasswordShown}
+                style={{
+                    width: "100%",
+                    color : COLORS.WhiteRGBA75
+                }}
+                />
 
-//             <TextInput
-//               style={styles.textbox}
-//               placeholder=" Confirm Password"
-//               secureTextEntry={!showPassword2}
-//               value={password2}
-//               onChangeText={setPassword2}
-//             />
+                <TouchableOpacity
+                onPress={() => setIsPasswordShown(!isPasswordShown)}
+                style={{
+                    position: "absolute",
+                    right: 12,
+                }}
+                >
+                {isPasswordShown == true ? (
+                    <Ionicons name="eye-off" size={24} color={COLORS.WhiteRGBA50} />
+                ) : (
+                    <Ionicons name="eye" size={24} color={COLORS.WhiteRGBA50} />
+                )}
+                </TouchableOpacity>
+            </View>
+            </View>
+            <View style={{ marginBottom: 12 }}>
+            <Text
+                style={{
+                fontSize: 16,
+                fontWeight: 400,
+                marginVertical: 8,
+                color : COLORS.WhiteRGBA75
+                }}
+            >
+                Upload Picture
+            </Text>
 
-//             <TouchableOpacity
-//               onPress={toggleShowPassword2}
-//               style={styles.showPasswordButton2}
-//             >
-//               <Icon name={showPassword2 ? "unlock" : "lock"} size={20} />
-//             </TouchableOpacity>
-//           </View>
+            <View
+                style={{
+                width: "100%",
+                height: 48,
+                borderColor: COLORS.WhiteRGBA32,
+                borderWidth: 1,
+                borderRadius: 8,
+                alignItems: "center",
+                justifyContent: "center",
+                paddingLeft: 22,
+                }}
+            >
+                <TextInput
+                placeholder="Enter your password"
+                placeholderTextColor={COLORS.WhiteRGBA50}
+                secureTextEntry={isPasswordShown}
+                style={{
+                    width: "100%",
+                    color : COLORS.WhiteRGBA75
+                }}
+                />
 
-//           <TouchableOpacity>
-//             <Text style={styles.box}>Create Account</Text>
-//           </TouchableOpacity>
+                <TouchableOpacity
+                onPress={() => setIsPasswordShown(!isPasswordShown)}
+                style={{
+                    position: "absolute",
+                    right: 12,
+                }}
+                >
+                {isPasswordShown == true ? (
+                    <Ionicons name="eye-off" size={24} color={COLORS.WhiteRGBA50} />
+                ) : (
+                    <Ionicons name="eye" size={24} color={COLORS.WhiteRGBA50} />
+                )}
+                </TouchableOpacity>
+            </View>
+            </View>
 
-//           <View style={{ flexDirection: "row", marginTop: 18 }}>
-//             <Text
-//               style={{
-//                 fontSize: responsiveScreenFontSize(2),
-//                 marginHorizontal: 2,
-//               }}
-//             >
-//               Already Have An Account?
-//             </Text>
-//             <Text
-//               style={{
-//                 fontSize: responsiveScreenFontSize(2),
-//                 color: "#87CEEB",
-//               }}
-//             >
-//               LogIn
-//             </Text>
-//           </View>
-//         </View>
-//       )}
-//     </Formik>
-//   );
-// };
+            <View
+            style={{
+                flexDirection: "row",
+                marginVertical: 6,
+            }}
+            >
+            <Checkbox
+                style={{ marginRight: 8 }}
+                value={isChecked}
+                onValueChange={setIsChecked}
+                color={isChecked ? "#007260" : undefined}
+            />
 
-// const styles = StyleSheet.create({
-//   textbox: {
-//     fontSize: responsiveScreenFontSize(2),
-//     borderColor: "black",
-//     borderWidth: 2,
-//     borderRadius: 10,
-//     width: responsiveScreenWidth(70),
-//     height: responsiveScreenHeight(7),
-//     textAlignVertical: "center",
-//     marginBottom: 20,
-//     textAlign: "center",
-//   },
-//   container: {
-//     marginTop: 100,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     // backgroundColor:'#DCDCDC'
-//   },
-//   box: {
-//     backgroundColor: "black",
-//     width: responsiveScreenWidth(38),
-//     height: responsiveScreenHeight(7),
-//     borderRadius: 20,
-//     color: "#fff",
-//     fontSize: 20,
-//     fontSize: responsiveScreenFontSize(3),
-//     textAlignVertical: "center",
-//     textAlign: "center",
-//   },
-//   showPasswordButton: {
-//     position: "absolute",
-//     right: 10,
-//     top: 226,
-//   },
-//   showPasswordButton2: {
-//     position: "absolute",
-//     right: 10,
-//     top: 298,
-//   },
-// });
+            <Text style = {{color : COLORS.WhiteRGBA75}}>I aggree to the terms and conditions</Text>
+            </View>
 
-// export default SignupUI;
+            {/* <Button
+            title="Sign Up"
+            filled
+            style={{
+                marginTop: 18,
+                marginBottom: 4,
+            }}
+            /> */}
 
+                    {/* Login Button */}
+                    <View style={styles.loginButtonContainer}>
+                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <Text style={styles.loginButton}>Sign Up</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View
+            style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginVertical: 6,
+            }}
+            >
+            <View
+                style={{
+                flex: 1,
+                height: 1,
+                backgroundColor: "#CCCCCC",
+                marginHorizontal: 10,
+                }}
+            />
+            <Text style={{ fontSize: 14 , color : COLORS.WhiteRGBA75 }}>Or Sign up with</Text>
+            <View
+                style={{
+                flex: 1,
+                height: 1,
+                backgroundColor: "#CCCCCC",
+                marginHorizontal: 10,
+                }}
+            />
+            </View>
+
+            <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center'
+                    }}>
+                        <TouchableOpacity
+                            onPress={() => console.log("Pressed")}
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexDirection: 'row',
+                                height: 52,
+                                borderWidth: 1,
+                                borderColor: "#CCCCCC",
+                                marginRight: 4,
+                                borderRadius: 10
+                            }}
+                        >
+                            <Image
+                                source={require('../../../assets/facebook.png')}
+                                style={{
+                                    height: 36,
+                                    width: 36,
+                                    marginRight: 8
+                                }}
+                                resizeMode='contain'
+                            />
+    
+                            <Text style = {{color: COLORS.White , fontSize : 16 , fontWeight : '600'}}>Facebook</Text>
+                        </TouchableOpacity>
+    
+                        <TouchableOpacity
+                            onPress={() => console.log("Pressed")}
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexDirection: 'row',
+                                height: 52,
+                                borderWidth: 1,
+                                borderColor: "#CCCCCC",
+                                marginRight: 4,
+                                borderRadius: 10
+                            }}
+                        >
+                            <Image
+                                source={require('../../../assets/google.png')}
+                                style={{
+                                    height: 36,
+                                    width: 36,
+                                    marginRight: 8
+                                }}
+                                resizeMode='contain'
+                            />
+    
+                            <Text style = {{color: COLORS.White , fontSize : 16 , fontWeight : '600'}}>Google</Text>
+                        </TouchableOpacity>
+                    </View>
+
+            <View
+            style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginVertical: 22,
+            }}
+            >
+            <Text style={{ fontSize: 16, color: COLORS.White }}>
+                Already have an account
+            </Text>
+            <Pressable onPress={() => navigation.navigate("Login")}>
+                <Text
+                style={{
+                    fontSize: 16,
+                    color: "#007260",
+                    fontWeight: "bold",
+                    marginLeft: 6,
+                }}
+                >
+                Login
+                </Text>
+            </Pressable>
+            </View>
+        </View>
+        </SafeAreaView>
+    </ScrollView>
+  );
+};
+
+export default SignUp;
+
+
+const styles = StyleSheet.create({
+    loginButtonContainer: {
+        alignItems: "center",
+        margin: "5%",
+      },
+      loginButton: {
+        color: "white",
+        backgroundColor: "#333",
+        padding: "4%",
+        borderRadius: 30,
+        width: responsiveScreenWidth(40),
+        textAlign: "center",
+        fontWeight: "700",
+      },
+})
