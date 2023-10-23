@@ -26,6 +26,10 @@ import {
 
 const SignUp = ({ navigation }: any) => {
   // state management
+  const [ name , setName ] = useState('');
+  const [ email , setEmail ] = useState('');
+  const [ password , setPassword ] = useState('');
+  const [ mobile , setMobile ] = useState('');
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
@@ -112,6 +116,8 @@ const SignUp = ({ navigation }: any) => {
                 placeholder="Enter your Name"
                 placeholderTextColor={COLORS.WhiteRGBA50}
                 keyboardType="email-address"
+                value={name}
+                onChangeText={(naam) => setName(naam)}
                 style={{
                   width: "100%",
                   color: COLORS.WhiteRGBA75,
@@ -151,6 +157,8 @@ const SignUp = ({ navigation }: any) => {
                   width: "100%",
                   color: COLORS.WhiteRGBA75,
                 }}
+                value={email}
+                onChangeText={(mail) => setEmail(mail)}
               />
             </View>
           </View>
@@ -200,6 +208,8 @@ const SignUp = ({ navigation }: any) => {
                   width: "80%",
                   color: COLORS.WhiteRGBA75,
                 }}
+                value={mobile}
+                onChangeText={(mob) => setMobile(mob)}
               />
             </View>
           </View>
@@ -236,6 +246,8 @@ const SignUp = ({ navigation }: any) => {
                   width: "100%",
                   color: COLORS.WhiteRGBA75,
                 }}
+                value={password}
+                onChangeText={(pass) => setPassword(pass)}
               />
 
               <TouchableOpacity
