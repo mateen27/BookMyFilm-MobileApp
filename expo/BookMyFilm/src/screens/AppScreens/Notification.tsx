@@ -1,18 +1,31 @@
-import { StyleSheet, Text, SafeAreaView } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect , useState } from 'react'
+import axios from 'axios'
 
-// importing the Header Component
-import HeaderComponent from "../../components/HeaderComponent";
+const Notification = () => {
 
-// importing the images
-import Menu from '../../images/menuu.png'
+    // state management
+    const [ chats , setChats ] = useState([]);
 
-const Notification: React.FC<{ navigation: any}> = ({navigation}) => {
+    // fetching the chats data
+    const fetchChats = async () => {
+        const { data } = await axios.get('http://192.168.29.181:8080/api/chat');
+
+        setChats(data);       
+    }
+
+    useEffect(() => {
+        fetchChats();
+    } , [])
+
   return (
-    <SafeAreaView>
-      {/* opening the drawer on Icon Click which is the HeaderComponent */}
-      <HeaderComponent navigation={navigation}/>
-    </SafeAreaView>
+      <View>
+        {
+            chats.map((chat) => (
+                <Text key={chat._id}>{chat.chatName}</Text>
+            ))
+        }
+      </View>
   )
 }
 
