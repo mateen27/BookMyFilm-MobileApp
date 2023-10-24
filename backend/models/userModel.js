@@ -15,6 +15,11 @@ const userModel = mongoose.Schema ({
         required : true , 
         unique : true
     } , 
+    mobile : {
+        type: String, // Store the number as a string
+        unique: true,
+        required: true,
+    } ,
     pic : {
         type : String , 
         // required : true , 

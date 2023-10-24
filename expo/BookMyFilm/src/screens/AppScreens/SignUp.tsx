@@ -9,6 +9,7 @@ import {
   Button,
   StyleSheet,
   ScrollView,
+  Alert,
 } from "react-native";
 // import { SafeAreaView } from "react-native-safe-area-context";
 // import COLORS from '../constants/colors';
@@ -18,50 +19,126 @@ import { COLORS } from "../../theme/theme";
 // import Button from '../components/Button';
 import React, { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
+
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize,
 } from "react-native-responsive-dimensions";
+import axios from "axios";
 
 const SignUp = ({ navigation }: any) => {
   // state management
-  const [ name , setName ] = useState('');
-  const [ email , setEmail ] = useState('');
-  const [ password , setPassword ] = useState('');
-  const [ mobile , setMobile ] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [mobile, setMobile] = useState("");
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
-  const [image, setImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      // requesting permission from the user for the Media Library
-      const galleryStatus =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasGalleryPermission(galleryStatus.status === "granted");
-    })();
-  }, []);
+  //   function handling the registration
+  // function handling the registration
+  const handleRegister = async () => {
+    if (selectedImage) {
+      try {
+        // Upload the image to Cloudinary and get the URL
+        const cloudinaryUrl = await uploadImageToCloudinary();
+        // console.log('IMAGE LINK is' , cloudinaryUrl);
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+        const user = {
+          name: name,
+          email: email,
+          mobile: mobile ,
+          password: password,
+          pic: cloudinaryUrl,
+        };
 
-    console.log(result);
+        // Send a POST request to register the user
+        const response = await axios.post(
+          "http://192.168.29.181:8080/api/user/",
+          user
+        );
 
-    if (!result.cancelled) {
-      setImage(result.uri);
+        if (response.status === 201) {
+          console.log(response);
+          Alert.alert("Registration successful", "You have been registered!");
+          setName("");
+          setEmail("");
+          setMobile("");
+          setPassword("");
+          setSelectedImage(null);
+        } else {
+          console.log(
+            "Registration failed. Response status: ",
+            response.status
+          );
+        }
+      } catch (error) {
+        Alert.alert(
+          "Registration error",
+          "An error occurred while registering"
+        );
+        console.error("Registration failed", error);
+      }
+    } else {
+      Alert.alert("Please select an image before uploading.");
     }
   };
 
-  if (hasGalleryPermission === false) {
-    return <Text>No access to Internal Storage</Text>;
-  }
+  // function for uploading the image to the cloudinary and selecting the image from gallery
+  const pickFromGallery = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setSelectedImage(result.assets[0].uri);
+    } else {
+      Alert.alert("You canceled the image selection.");
+    }
+  };
+
+  const uploadImageToCloudinary = async () => {
+    // Ensure an image is selected
+    if (selectedImage) {
+      const data = new FormData();
+      data.append("file", {
+        uri: selectedImage,
+        type: `image/${selectedImage.split(".").pop()}`,
+        name: `test.${selectedImage.split(".").pop()}`,
+      });
+      data.append("upload_preset", "ShowStarter"); // Replace with your Cloudinary upload preset
+
+      try {
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dvvnup3nh/image/upload",
+          {
+            method: "post",
+            body: data,
+          }
+        );
+
+        if (response.status === 200) {
+          const data = await response.json();
+          if (data.secure_url) {
+            // Image uploaded successfully
+            console.log("Image uploaded to Cloudinary: ", data.secure_url);
+            return data.secure_url; // Return the Cloudinary URL
+          }
+        }
+        console.log("Image upload to Cloudinary failed");
+      } catch (error) {
+        console.error("Error uploading to Cloudinary: ", error);
+      }
+    } else {
+      Alert.alert("Please select an image before uploading.");
+    }
+  };
+
   return (
     <ScrollView>
       <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.Black }}>
@@ -297,9 +374,24 @@ const SignUp = ({ navigation }: any) => {
             >
               <Button
                 title="Upload Image"
-                onPress={() => pickImage()}
+                onPress={() => pickFromGallery()}
                 color={COLORS.primary}
               />
+            </View>
+            <View>
+              {selectedImage && (
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    color: "white",
+                  }}
+                >
+                  Selected Image:{" "}
+                  {selectedImage.substring(selectedImage.lastIndexOf("/") + 1)}
+                </Text>
+              )}
             </View>
           </View>
 
@@ -332,7 +424,7 @@ const SignUp = ({ navigation }: any) => {
 
           {/* Login Button */}
           <View style={styles.loginButtonContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+            <TouchableOpacity onPress={() => handleRegister()}>
               <Text style={styles.loginButton}>Sign Up</Text>
             </TouchableOpacity>
           </View>
