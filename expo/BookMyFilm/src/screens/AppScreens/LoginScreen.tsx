@@ -7,6 +7,7 @@ import {
     SafeAreaView,
     TouchableOpacity,
     ScrollView,
+    Alert
   } from "react-native";
   import { AntDesign } from "@expo/vector-icons";
   import Icon from "react-native-vector-icons/FontAwesome";
@@ -19,14 +20,43 @@ import {
     responsiveScreenWidth,
     responsiveScreenFontSize,
   } from "react-native-responsive-dimensions";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
   
   const LoginScreen = ({navigation , route} :any) => {
+    const [ email , setEmail ] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
   
     const toggleShowPassword = () => {
       setShowPassword(!showPassword);
     };
+
+    // function for handling the login button
+ const handleLogin = () => {
+  const user = {
+    email: email,
+    password: password,
+  };
+
+  // making the request to the backend to check if the user exist or not
+  axios
+    .post('http://192.168.29.181:8080/api/user/login',user)
+    .then((response) => {
+      console.log(response);
+      const token = response.data.token;
+      // need access to the async-storage in order to store the token
+      AsyncStorage.setItem("authToken", token);
+      Alert.alert("Login Success", "Welcome User");
+
+      // navigating to the HomeScreen once the user is authentic
+      navigation.navigate("Home");
+    })
+    .catch((error) => {
+      Alert.alert("Login Error", "Invalid Email or Password!");
+      console.log("Login Error", error);
+    });
+};
   
     return (
       <SafeAreaView style={styles.container}>
@@ -45,7 +75,7 @@ import {
           {/* for textInput Fields */}
           <View style={styles.textInputContainer}>
             <AntDesign name="user" size={24} color="white" />
-            <TextInput style={styles.textbox} placeholder="User Name" placeholderTextColor="gray" />
+            <TextInput style={styles.textbox} placeholder="Email" placeholderTextColor="gray" value={email} onChangeText={(text) => setEmail(text)}/>
           </View>
           <View style={styles.textInputContainer}>
             <Feather name="unlock" size={24} color="white" />
@@ -74,7 +104,7 @@ import {
   
           {/* Login Button */}
           <View style={styles.loginButtonContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => handleLogin()}>
               <Text style={styles.loginButton}>Login</Text>
             </TouchableOpacity>
           </View>

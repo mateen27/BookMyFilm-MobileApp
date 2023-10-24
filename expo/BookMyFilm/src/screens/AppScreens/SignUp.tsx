@@ -68,6 +68,9 @@ const SignUp = ({ navigation }: any) => {
           setMobile("");
           setPassword("");
           setSelectedImage(null);
+
+          // navigating to the LoginScreen once the user is registered
+          navigation.navigate("Login");
         } else {
           console.log(
             "Registration failed. Response status: ",
