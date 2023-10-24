@@ -3,7 +3,8 @@ const chats = require('./data/data');
 const connectDB = require('./config/database');
 const app = express();
 const colors = require('colors')
-const userRoutes = require('./routes/userRoutes')
+const userRoutes = require('./routes/userRoutes');
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 require('dotenv').config();
 
@@ -31,6 +32,10 @@ app.get('/' , (req , res) => {
 // })
 
 app.use('/api/user' , userRoutes)
+
+// error handling middlewares
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(PORT , () => {
     console.log(`server running at ${PORT}`.yellow.bold);
