@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userModel = mongoose.Schema ({
     name : {
@@ -24,6 +25,21 @@ const userModel = mongoose.Schema ({
     timestamps : true
 }
 )
+
+userModel.methods.matchPassword = async function(password){
+    return await bcrypt.compare(password, this.password)
+}
+
+// middleware
+// before saving we mmust encrypt the password
+userModel.pre('save' , async function (next) {
+    if(!this.isModified){
+        next();
+    }
+
+    const salt = await bcrypt.genSalt(15);
+    this.password = await bcrypt.hash(this.password , salt)
+})
 
 const User = mongoose.model("User" , userModel);
 
