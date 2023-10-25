@@ -3,6 +3,7 @@ import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS } from '../../theme/theme'
 import Button from '../../components/Button'
+import { StatusBar } from 'expo-status-bar'
 
 const WelcomeRoomScreen = ( { navigation , routes } :any) => {
   return (
@@ -51,7 +52,7 @@ const WelcomeRoomScreen = ( { navigation , routes } :any) => {
             </View>
 
         </View>
-
+        <StatusBar style='dark'/>
     </LinearGradient>
   )
 }

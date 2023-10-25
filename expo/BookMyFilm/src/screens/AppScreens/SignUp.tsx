@@ -16,6 +16,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { COLORS } from "../../theme/theme";
+import { StatusBar } from "expo-status-bar";
 // import Button from '../components/Button';
 import React, { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
@@ -554,6 +555,7 @@ const SignUp = ({ navigation }: any) => {
           </View>
         </View>
       </SafeAreaView>
+      <StatusBar style="dark"/>
     </ScrollView>
   );
 };

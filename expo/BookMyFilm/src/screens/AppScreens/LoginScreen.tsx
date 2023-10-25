@@ -7,7 +7,7 @@ import {
     SafeAreaView,
     TouchableOpacity,
     ScrollView,
-    Alert
+    Alert , 
   } from "react-native";
   import { AntDesign } from "@expo/vector-icons";
   import Icon from "react-native-vector-icons/FontAwesome";
@@ -15,6 +15,7 @@ import {
   import { FontAwesome } from "@expo/vector-icons";
   import { MaterialCommunityIcons } from "@expo/vector-icons";
   import React, { useState } from "react";
+  import { StatusBar } from 'expo-status-bar';
   import {
     responsiveScreenHeight,
     responsiveScreenWidth,
@@ -104,7 +105,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
   
           {/* Login Button */}
           <View style={styles.loginButtonContainer}>
-            <TouchableOpacity onPress={() => handleLogin()}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <Text style={styles.loginButton}>Login</Text>
             </TouchableOpacity>
           </View>
@@ -143,6 +144,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
                 <Text style={{ color: "#87CEEB" }}>Signup</Text></TouchableOpacity>
           </View>
         </ScrollView>
+        <StatusBar style='dark'/>
       </SafeAreaView>
     );
   };

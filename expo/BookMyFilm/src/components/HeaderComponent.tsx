@@ -33,7 +33,7 @@ const HeaderComponent: React.FC<{navigation: any , props: any}> = ({ navigation 
       {/* Notification Icon */} 
       <TouchableOpacity
       onPress={() => navigation.navigate('Notification')}
-      ><Ionicons name="notifications-outline" size={25} color="#f5f6fa" /></TouchableOpacity>
+      ><Ionicons name="chatbox-outline" size={25} color="#f5f6fa" /></TouchableOpacity>
     </SafeAreaView>
   )
 }
