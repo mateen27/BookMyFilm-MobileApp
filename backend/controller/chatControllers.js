@@ -54,4 +54,32 @@ const accessChat = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { accessChat };
+// fetch chats API
+const fetchChats = asyncHandler(async (req, res) => {
+  try {
+    // need to check which user is logged in and query all chats for the particular user!
+    // showing chats where the user is a part of
+    Chat.find({
+      users: {
+        $elemMatch: { $eq: req.user._id },
+      },
+    })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password")
+      .populate("latestMessage")
+      .sort({ updatedAt: -1 })
+      .then(async (results) => {
+        results = await User.populate(results, {
+          path: "latestMessage.sender",
+          select: "name pic email",
+        });
+        
+        res.status(200).send(results);
+      });
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
+
+module.exports = { accessChat, fetchChats };
