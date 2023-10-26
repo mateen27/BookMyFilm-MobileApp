@@ -3398,6 +3398,13 @@ expo-linear-gradient@^12.5.0:
   resolved "https://registry.npmjs.org/expo-linear-gradient/-/expo-linear-gradient-12.5.0.tgz"
   integrity sha512-GOV2wODawr2biRCtF2Yb5+wLzvnwXS8dAblfQO7qjyh4f7TDTJn7X0TlVSDMNhIdbAcZBrdxvGFeE2iXdzQ6ow==
 
+expo-local-authentication@^13.6.0:
+  version "13.6.0"
+  resolved "https://registry.npmjs.org/expo-local-authentication/-/expo-local-authentication-13.6.0.tgz"
+  integrity sha512-kvM3oZc+K0xHMBFdNAVEVUbynaq0A2coqxk8kECx25hJ3vxgIY1Dktx+UD6Y+H9zMyQwYtcGhRPW4BOK1cqRuA==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-modules-autolinking@>=0.8.1, expo-modules-autolinking@1.5.1:
   version "1.5.1"
   resolved "https://registry.npmjs.org/expo-modules-autolinking/-/expo-modules-autolinking-1.5.1.tgz"

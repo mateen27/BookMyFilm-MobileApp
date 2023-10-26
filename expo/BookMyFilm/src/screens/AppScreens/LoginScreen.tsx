@@ -14,7 +14,7 @@ import {
   import { Feather } from "@expo/vector-icons";
   import { FontAwesome } from "@expo/vector-icons";
   import { MaterialCommunityIcons } from "@expo/vector-icons";
-  import React, { useState } from "react";
+  import React, { useState , useEffect } from "react";
   import { StatusBar } from 'expo-status-bar';
   import {
     responsiveScreenHeight,
@@ -23,15 +23,91 @@ import {
   } from "react-native-responsive-dimensions";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as LocalAuthentication from "expo-local-authentication";
   
   const LoginScreen = ({navigation , route} :any) => {
     const [ email , setEmail ] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [isBiometricSupported, setIsBiometricSupported] = useState(false);
   
     const toggleShowPassword = () => {
       setShowPassword(!showPassword);
     };
+
+
+    // for checking if the device supports biometric or not!
+    useEffect(() => {
+      (async () => {
+        const isBiometricSupported = await LocalAuthentication.hasHardwareAsync();
+        setIsBiometricSupported(isBiometricSupported);
+      })();
+    }, []);
+
+    // function handling the biometric scene
+    const fallBackToDefaultAuth = () => {
+      console.log("Fallback to password authentication");
+    };
+  
+    const alertComponent = (title : any, mess: any, btnTxt: any, btnFunc: any) => {
+      return Alert.alert(title, mess, [
+        {
+          text: btnTxt,
+          onPress: btnFunc,
+        },
+      ]);
+    };
+  
+    const TwoButtonAlert = () => {
+      Alert.alert("Welcome to Show Starter" , 'Logged in as Guest User!' , [
+        {
+          text: "Back",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => navigation.navigate('Home'),
+        },
+      ]);
+    };
+  
+    // main logic for biometric functonality
+    const handleBiometricAuth = async () => {
+      const isBiometricSupported = await LocalAuthentication.hasHardwareAsync();
+  
+      if (!isBiometricSupported) {
+        return alertComponent(
+          "Please Enter Your Password",
+          "Biometric Auth not Supported",
+          "Ok",
+          () => fallBackToDefaultAuth()
+        );
+      }
+  
+      // const supportedBiometrics = await LocalAuthentication.supportedAuthenticationTypesAsync();
+      const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
+  
+      if (!savedBiometrics) {
+        return alertComponent(
+          "Biometric record not found",
+          "Please login with Password",
+          "OK",
+          () => fallBackToDefaultAuth()
+        );
+      }
+  
+      const biometricAuth = await LocalAuthentication.authenticateAsync({
+        promptMessage: "Login with Biometrics",
+        cancelLabel: "Cancel" ,
+        disableDeviceFallback: true,
+      });
+  
+      if (biometricAuth.success) {
+        TwoButtonAlert();
+      }
+}
+  
 
     // function for handling the login button
  const handleLogin = () => {
@@ -105,9 +181,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
   
           {/* Login Button */}
           <View style={styles.loginButtonContainer}>
+
+            {/* button for the login */}
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <Text style={styles.loginButton}>Login</Text>
             </TouchableOpacity>
+
+            {/* button for guest login with the biometric */}
+            <TouchableOpacity onPress={() => handleBiometricAuth()}>
+              <Text style={[styles.loginButton , { backgroundColor : '#007260' }]}>Guest Login</Text>
+            </TouchableOpacity>
+
           </View>
   
           {/* Connect Using Section */}
@@ -139,9 +223,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
               marginTop: "5%",
             }}
           >
-            <Text style={{ marginHorizontal: 2 , color : '#ffffff' }}>Don't Have An Account?</Text>
+            <Text style={{ marginHorizontal: 2 , color : '#ffffff' , fontWeight : '900' }}>Don't Have An Account?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                <Text style={{ color: "#87CEEB" }}>Signup</Text></TouchableOpacity>
+                <Text style={{ color: "#007260" , fontWeight : '800'  }}>Signup</Text></TouchableOpacity>
           </View>
         </ScrollView>
         <StatusBar style='dark'/>
@@ -210,7 +294,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
       fontWeight: "700",
     },
     loginButtonContainer: {
-      alignItems: "center",
+      flexDirection : 'row' ,
+      justifyContent : 'space-evenly' ,
       margin: "5%",
     },
     loginButton: {
