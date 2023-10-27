@@ -82,4 +82,44 @@ const fetchChats = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { accessChat, fetchChats };
+const createGroupChat = asyncHandler(async ( req, res ) => {
+    // when there is no group name and not selected users
+    if(!req.body.users || !req.body.name) {
+        return res.status(400).send({ message : 'Please fill all the fields!'});
+    }
+
+    // sent users in stringify from frontend and parsing it in the backend
+    var users = JSON.parse(req.body.users);
+
+    // checking if the group have more than 2 members or not
+    if( users.length < 2) {
+        return res
+            .status(400)
+            .send('More than 2 users are required to create a group chat');
+    }
+
+    users.push(req.user);
+
+    try {
+        const groupChat = await Chat.create({
+            chatName: req.body.name , 
+            users: users , 
+            isGroupChat: true , 
+            groupAdmin: req.user
+        })
+
+        // fetching group chat and sending back to the user!
+        const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
+        .populate("users", "-password")
+        .populate("groupAdmin", "-password")
+
+        res.status(200).json(fullGroupChat)
+    } catch (error) {
+        res.status(400);
+        throw new Error(error.message);
+    }
+})
+
+// rename group endpoint api
+
+module.exports = { accessChat, fetchChats , createGroupChat };
