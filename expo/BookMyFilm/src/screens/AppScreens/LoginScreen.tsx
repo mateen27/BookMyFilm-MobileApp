@@ -118,10 +118,12 @@ import * as LocalAuthentication from "expo-local-authentication";
 
   // making the request to the backend to check if the user exist or not
   axios
-    .post('http://192.168.29.181:8080/api/user/login',user)
+    .post('http://192.168.1.2:8080/api/user/login',user)
     .then((response) => {
       console.log(response);
       const token = response.data.token;
+      // console.log(token);
+      
       // need access to the async-storage in order to store the token
       AsyncStorage.setItem("authToken", token);
       Alert.alert("Login Success", "Welcome User");
@@ -183,7 +185,7 @@ import * as LocalAuthentication from "expo-local-authentication";
           <View style={styles.loginButtonContainer}>
 
             {/* button for the login */}
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => handleLogin()}>
               <Text style={styles.loginButton}>Login</Text>
             </TouchableOpacity>
 

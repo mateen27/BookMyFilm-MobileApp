@@ -57,7 +57,7 @@ const SignUp = ({ navigation }: any) => {
 
         // Send a POST request to register the user
         const response = await axios.post(
-          "http://192.168.29.181:8080/api/user/",
+          "http://192.168.1.2:8080/api/user/",
           user
         );
 
