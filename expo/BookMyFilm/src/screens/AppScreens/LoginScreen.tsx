@@ -74,6 +74,7 @@ import * as LocalAuthentication from "expo-local-authentication";
   
     // main logic for biometric functonality
     const handleBiometricAuth = async () => {
+      AsyncStorage.removeItem('authToken');
       const isBiometricSupported = await LocalAuthentication.hasHardwareAsync();
   
       if (!isBiometricSupported) {
@@ -118,7 +119,7 @@ import * as LocalAuthentication from "expo-local-authentication";
 
   // making the request to the backend to check if the user exist or not
   axios
-    .post('http://192.168.1.2:8080/api/user/login',user)
+    .post('http://192.168.29.181:8080/api/user/login',user)
     .then((response) => {
       console.log(response);
       const token = response.data.token;

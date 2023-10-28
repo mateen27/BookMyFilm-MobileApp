@@ -8,8 +8,17 @@ import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { shareAppLink } from '../../components/SocialShare';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomDrawer = ({navigation} : any) => {
+
+  // function for logging out the user
+  const logoutHandler = () => {
+    AsyncStorage.removeItem('authToken');
+    navigation.navigate('Login')
+  }
+
+
   return (
     <View style = {{backgroundColor : '#333' , flex : 1  }}>
 
@@ -22,8 +31,8 @@ const CustomDrawer = ({navigation} : any) => {
 
 
       <View style = {{marginTop : '20%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
-        <AntDesign name="home" size={28} color='orange' />
-        <Text style = {[styles.homeText , {color : 'orange'}]}>Home</Text>
+        <AntDesign name="home" size={28} color='white' />
+        <Text style = {[styles.homeText]}>Home</Text>
       </View>
 
       {/* Explore Movies Search Movies */}
@@ -33,10 +42,10 @@ const CustomDrawer = ({navigation} : any) => {
       </View>
 
       {/* Filter Movies by Category  */}
-      <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
+      {/* <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
         <MaterialIcons name="filter-list-alt" size={24} color="white" />
         <Text style = {styles.homeText}>Filter by Category</Text>
-        </View>
+        </View> */}
 
       {/* Stream Movies */}
       <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
@@ -45,10 +54,10 @@ const CustomDrawer = ({navigation} : any) => {
       </View>
 
       {/* Book Tickets */}
-      <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
+      {/* <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
         <Entypo name="ticket" size={24} color="white" />
         <Text style = {styles.homeText}>Book Tickets</Text>
-      </View>
+      </View> */}
 
         {/* Invite Friends by Sending Messages  */}
         <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
@@ -64,8 +73,8 @@ const CustomDrawer = ({navigation} : any) => {
 
         {/* Profile Section */}
         <View style = {{marginTop : '12%' , flexDirection : 'row' , marginHorizontal : '10%' , alignItems : 'center'}}>
-          <Feather name="user" size={24} color="white" />
-          <TouchableOpacity style = {{justifyContent : 'center' , alignItems : 'center'}} onPress={() => navigation.navigate('Profile')}><Text style = {styles.homeText}>Profile</Text></TouchableOpacity>
+          <Feather name="log-out" size={24} color="white" />
+          <TouchableOpacity style = {{justifyContent : 'center' , alignItems : 'center'}} onPress={() => logoutHandler()}><Text style = {styles.homeText}>Logout</Text></TouchableOpacity>
         </View>
     </View>
   )
