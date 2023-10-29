@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
+  FlatList
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../theme/theme";
@@ -96,6 +97,8 @@ const Notification = () => {
     checkingLoginStatus();
   }, []);
 
+  // console.log('search result' , searchResult)
+
   return (
     <>
       <View style={styles.header}>
@@ -131,17 +134,25 @@ const Notification = () => {
       </View>
 
       <View style={styles.container}>
-        {loading ? (
+      {showSearch ? (
+        loading ? (
           <ActivityIndicator size="large" color="#00ff00" />
         ) : (
-          searchResult.map((user) => (
-            // Assuming UserListItem is a component to render user information
-            <UserListItem key={user._id} user={user} handleFunction={() => accessChat(user._id)}/>
-          ))
-        )}
+          <FlatList
+            style={ !showSearch ? { marginTop: '15%' } : {marginTop : 0}}
+            data={searchResult}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => (
+              <UserListItem user={item} handleFunction={() => accessChat(item._id)} />
+            )}
+          />
+        )
+      ) : (
+        <Text style = {{color : 'white'}}>Only dummy text or component to display here</Text>
+      )}
       </View>
 
-      {tokenAvailable && (
+      { !showSearch && tokenAvailable && (
         <TouchableOpacity style={styles.groupButton}>
           <Ionicons
             name="people"
@@ -153,7 +164,7 @@ const Notification = () => {
         </TouchableOpacity>
       )}
 
-      {tokenAvailable && (
+      { !showSearch && tokenAvailable && (
         <TouchableOpacity style={styles.callButton}>
           <Ionicons
             name="call"
@@ -195,9 +206,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: COLORS.Black,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
+    backgroundColor : COLORS.Black
   },
   groupButton: {
     flexDirection: "row",
