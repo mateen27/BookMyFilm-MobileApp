@@ -129,6 +129,9 @@ import * as LocalAuthentication from "expo-local-authentication";
       AsyncStorage.setItem("authToken", token);
       Alert.alert("Login Success", "Welcome User");
 
+      setEmail('')
+      setPassword('')
+
       // navigating to the HomeScreen once the user is authentic
       navigation.navigate("Home");
     })

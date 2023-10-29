@@ -9,25 +9,25 @@ const ChatProvider = ({ children }) => {
   const navigation = useNavigation();
 
   // checking if the token is present or not when the app opens
-//   useEffect(() => {
-//     const checkingLoginStatus = async() => {
-//       try {
-//         const token = await AsyncStorage.getItem('authToken');
+  useEffect(() => {
+    const checkingLoginStatus = async() => {
+      try {
+        const token = await AsyncStorage.getItem('authToken');
 
-//         // token is present
-//         if(token) {
-//           navigation.navigate('Home')
-//         }
-//         // token is not present
-//         else {
-//           navigation.navigate('Login')
-//         }
-//       } catch (error) {
-//         console.log("error",error);
-//       }
-//     }
-//     checkingLoginStatus();
-//   } , [])
+        // token is present
+        if(token) {
+          navigation.navigate('Home')
+        }
+        // token is not present
+        else {
+          navigation.navigate('Login')
+        }
+      } catch (error) {
+        console.log("error",error);
+      }
+    }
+    checkingLoginStatus();
+  } , [])
 
   return (
     <ChatContext.Provider value={{ user, setUser }}>

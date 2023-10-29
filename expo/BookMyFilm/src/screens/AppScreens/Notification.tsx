@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../theme/theme";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import { ChatState } from "../../context/ChatProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import ChatLoading from "../../components/ChatLoading";
+import UserListItem from "../../components/UserListItem";
 
 const Notification = () => {
   const navigation = useNavigation();
   const { user } = ChatState();
 
   const [showSearch, setShowSearch] = useState(false);
-  const [ tokenAvailable , setTokenAvailable ] = useState(false);
+  const [tokenAvailable, setTokenAvailable] = useState(false);
+  const [value, setValue] = useState("");
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [searchResult, setSearchResult] = useState([]);
 
   const toggleSearch = () => {
     setShowSearch((prev) => !prev);
@@ -20,21 +35,59 @@ const Notification = () => {
 
   const backHandler = () => {
     navigation.goBack();
+  };
+
+  //   searching the users
+  const handleSearch = async () => {
+    // if (!search) {
+    //   Alert.alert("Please enter UserName to search users!");
+    // }
+
+    // searching users
+    // searching users
+    try {
+      setLoading(true);
+
+      const storedToken = await AsyncStorage.getItem("authToken");
+      // console.log(storedToken);
+      
+      if (storedToken) {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${storedToken}`, // Use the token from AsyncStorage
+          },
+        };
+
+        // getting the data
+        const { data } = await axios.get(`http://192.168.29.181:8080/api/user?search=${search}`, config);
+
+        setLoading(false);
+        setSearchResult(data);
+      } else {
+        // Handle if the token is not available
+      }
+    } catch (error) {
+      console.log("Error occurred to load search results!", error);
+    }
+  };
+
+  const accessChat = (userId: any) => {
+
   }
 
   useEffect(() => {
     const checkingLoginStatus = async () => {
       try {
-        const token = await AsyncStorage.getItem('authToken');
-        console.log(token);
-        
+        const token = await AsyncStorage.getItem("authToken");
+        // console.log(token);
+
         if (token) {
-            if (token !== null && token !== undefined) {
-              setTokenAvailable(true);
-            }
-            navigation.navigate('Notification');
+          if (token !== null && token !== undefined) {
+            setTokenAvailable(true);
+          }
+          navigation.navigate("Notification");
         } else {
-          const value = Alert.alert('You are logged in as Guest!', 'Login Now');
+          const value = Alert.alert("You are logged in as Guest!", "Login Now");
         }
       } catch (error) {
         console.log("error", error);
@@ -46,17 +99,23 @@ const Notification = () => {
   return (
     <>
       <View style={styles.header}>
-          <TouchableOpacity style={styles.iconContainer} onPress={backHandler}>
-            <Ionicons name="chevron-back-sharp" size={26} color={COLORS.White} />
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.iconContainer} onPress={backHandler}>
+          <Ionicons name="chevron-back-sharp" size={26} color={COLORS.White} />
+        </TouchableOpacity>
 
         <View style={styles.titleContainer}>
-          { showSearch ? (
+          {showSearch ? (
             <TextInput
               style={styles.searchInput}
               placeholder="Search Friends"
+              placeholderTextColor={"#f1f1f1"}
               autoFocus={true}
               onBlur={toggleSearch}
+              value={search}
+              onChangeText={(text) => {
+                setSearch(text);
+                handleSearch();
+              }}
             />
           ) : (
             <Text style={styles.title}>Chats</Text>
@@ -72,18 +131,39 @@ const Notification = () => {
       </View>
 
       <View style={styles.container}>
-        <Text style={{ color: "white" }}>hi</Text>
+        {loading ? (
+          <ActivityIndicator size="large" color="#00ff00" />
+        ) : (
+          searchResult.map((user) => (
+            // Assuming UserListItem is a component to render user information
+            <UserListItem key={user._id} user={user} handleFunction={() => accessChat(user._id)}/>
+          ))
+        )}
       </View>
 
-      { tokenAvailable && (<TouchableOpacity style={styles.groupButton}>
-        <Ionicons name="people" size={24} color={COLORS.White} style={styles.groupIcon} />
-        <Text style={styles.groupText}>Groups</Text>
-      </TouchableOpacity>)}
+      {tokenAvailable && (
+        <TouchableOpacity style={styles.groupButton}>
+          <Ionicons
+            name="people"
+            size={24}
+            color={COLORS.White}
+            style={styles.groupIcon}
+          />
+          <Text style={styles.groupText}>Groups</Text>
+        </TouchableOpacity>
+      )}
 
-      { tokenAvailable && (<TouchableOpacity style={styles.callButton}>
-        <Ionicons name="call" size={24} color={COLORS.White} style={styles.callIcon} />
-        <Text style={styles.callText}>Calls</Text>
-      </TouchableOpacity>)}
+      {tokenAvailable && (
+        <TouchableOpacity style={styles.callButton}>
+          <Ionicons
+            name="call"
+            size={24}
+            color={COLORS.White}
+            style={styles.callIcon}
+          />
+          <Text style={styles.callText}>Calls</Text>
+        </TouchableOpacity>
+      )}
 
       <StatusBar style="dark" />
     </>
