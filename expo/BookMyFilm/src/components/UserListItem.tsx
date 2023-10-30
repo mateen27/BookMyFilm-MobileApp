@@ -1,9 +1,15 @@
 // UserListItem component
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { COLORS } from "../theme/theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { ChatState } from "../context/ChatProvider";
 
-const UserListItem = ({ user, handleFunction }: any) => {
+const UserListItem = ({ user , handleFunction }: any) => {
+
+    const { setSelectedChat , selectedChat ,  chats , setChats } = ChatState();
+
   return (
     <View style = {styles.mainContainer}>
       <TouchableOpacity style={styles.card} onPress={handleFunction}>
@@ -14,6 +20,7 @@ const UserListItem = ({ user, handleFunction }: any) => {
           <Text style={styles.username}>{user.name}</Text>
           <Text style={styles.email}>{user.email}</Text>
         </View>
+        {/* <Text>Hi</Text> */}
       </TouchableOpacity>
     </View>
   );

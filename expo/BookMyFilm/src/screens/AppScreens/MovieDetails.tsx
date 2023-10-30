@@ -121,6 +121,8 @@ const MovieDetails = ({ navigation, route }: any) => {
       });
   }, []);
   // console.log(telguMovies)
+  // console.log(movieData);
+  
 
   // Lazy Loading
   if (
@@ -267,6 +269,10 @@ const MovieDetails = ({ navigation, route }: any) => {
                 // console.log('Selected Movie:', selectedMovie);
                 const movieLink = selectedMovie?.firebase_link;
                 const ytLink = selectedMovie?.trailerLink;
+                // const movieDetails = movieData;
+
+                // console.log('m' , movieDetails);
+                
 
                 // console.log('movieLink:', movieLink);
                 // console.log('ytLink:', ytLink); // Add this line for logging
@@ -283,7 +289,8 @@ const MovieDetails = ({ navigation, route }: any) => {
                       bgImage: baseImageURL("w780", movieData.backdrop_path),
                       posterImage: baseImageURL("original", movieData.poster_path),
                       movieLink: movieLink,
-                      movieName : movieName
+                      movieName : movieName , 
+                      movieDetails : movieData
                     });
                   }
                   else{
@@ -291,7 +298,8 @@ const MovieDetails = ({ navigation, route }: any) => {
                       bgImage: baseImageURL("w780", movieData.backdrop_path),
                       posterImage: baseImageURL("original", movieData.poster_path),
                       trailerLink: ytLink,  // Ensure ytLink is correctly assigned
-                      movieName: movieName
+                      movieName: movieName, 
+                      movieDetails : movieData
                     });
                   }
               }}

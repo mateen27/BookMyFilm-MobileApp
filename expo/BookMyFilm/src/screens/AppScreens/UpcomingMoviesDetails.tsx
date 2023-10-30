@@ -91,6 +91,9 @@ import {
     }, []);
     // console.log(telguMovies)
 
+    // console.log(movieData);
+    
+
 
 // for formatting the Date format coming from the json data
     const formatDate = (inputDate: any) => {
@@ -257,7 +260,8 @@ import {
                     bgImage: baseImageURL("w780", movieData.backdrop_path),
                     posterImage: baseImageURL("original", movieData.poster_path),
                     movieLink: movieLink,
-                    movieName : movieName
+                    movieName : movieName , 
+                    movieData : movieData
                   });
                 }}
               >

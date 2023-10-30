@@ -18,10 +18,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import ChatLoading from "../../components/ChatLoading";
 import UserListItem from "../../components/UserListItem";
+import Cards from "../../components/Cards";
 
 const Notification = () => {
   const navigation = useNavigation();
-  const { user } = ChatState();
+  const { user , setSelectedChat , selectedChat ,  chats , setChats } = ChatState();
 
   const [showSearch, setShowSearch] = useState(false);
   const [tokenAvailable, setTokenAvailable] = useState(false);
@@ -29,6 +30,10 @@ const Notification = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
+  const [ loadingChat , setLoadingChat ] = useState();
+
+  // console.log('User' ,user);
+  
 
   const toggleSearch = () => {
     setShowSearch((prev) => !prev);
@@ -72,9 +77,36 @@ const Notification = () => {
     }
   };
 
-  const accessChat = (userId: any) => {
+  // function for accessing the chats
+  const accessChat = async (userId: any) => {
+    try { 
+      setLoading(true);
 
-  }
+      const storedToken = await AsyncStorage.getItem("authToken");
+      if (storedToken) {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${storedToken}`,
+          },
+        };
+
+        const { data } = await axios.post(
+          `http://192.168.29.181:8080/api/chat`,
+          { userId },
+          config
+        );
+
+        if (!chats.find((c) => c._id === data._id)) 
+          {setChats([data, ...chats]);}
+
+        setSelectedChat(data);
+        setLoadingChat(false);
+      }
+    } catch (error) {
+      Alert.alert('Error fetching chat');
+    }
+  };
 
   useEffect(() => {
     const checkingLoginStatus = async () => {
@@ -135,21 +167,27 @@ const Notification = () => {
 
       <View style={styles.container}>
       {showSearch ? (
-        loading ? (
-          <ActivityIndicator size="large" color="#00ff00" />
+  loading ? (
+    <ActivityIndicator size="large" color="#00ff00" />
+  ) : (
+    searchResult.map((item) => (
+      <TouchableOpacity key={item._id} onPress={() => accessChat(item._id)}>
+        {loadingChat === item._id ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color={COLORS.White} />
+          </View>
         ) : (
-          <FlatList
-            style={ !showSearch ? { marginTop: '15%' } : {marginTop : 0}}
-            data={searchResult}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <UserListItem user={item} handleFunction={() => accessChat(item._id)} />
-            )}
-          />
-        )
-      ) : (
-        <Text style = {{color : 'white'}}>Only dummy text or component to display here</Text>
-      )}
+          <UserListItem user={item} handleFunction={() => accessChat(item._id)} />
+        )}
+      </TouchableOpacity>
+    ))
+  )
+) : (
+  <View style={{ marginTop: '15%' }}>
+    <Cards />
+  </View>
+)}
+
       </View>
 
       { !showSearch && tokenAvailable && (
@@ -160,7 +198,7 @@ const Notification = () => {
             color={COLORS.White}
             style={styles.groupIcon}
           />
-          <Text style={styles.groupText}>Groups</Text>
+          <Text style={styles.groupText}>New Group</Text>
         </TouchableOpacity>
       )}
 
@@ -253,6 +291,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: 200, // Adjust the width as needed
   },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  }
 });
 
 export default Notification;

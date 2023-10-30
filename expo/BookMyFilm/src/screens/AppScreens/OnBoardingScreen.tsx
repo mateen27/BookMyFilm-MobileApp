@@ -22,20 +22,20 @@ const slides = [
   {
     id: 1,
     image: require("../../../images/image1.png"),
-    title: "Best Streaming Platform",
-    subtitle: "lorem lorem lorem lorem lorem lorem",
+    title: "Endless Choices",
+    subtitle: "Discover a vast array of movies",
   },
   {
     id: 2,
     image: require("../../../images/image2.png"),
-    title: "Watch Anytime and Anywhere.",
-    subtitle: "lorem lorem lorem lorem lorem lorem",
+    title: "Discover & Reserve",
+    subtitle: "Explore a vast library of movies, concerts, and events.",
   },
   {
     id: 3,
     image: require("../../../images/image3.png"),
-    title: "Free and always will be.",
-    subtitle: "lorem lorem lorem lorem lorem lorem",
+    title: "Social Entertainment",
+    subtitle: "Connect with friends, discuss & enjoy movies together!",
   },
 ];
 
@@ -135,13 +135,13 @@ const OnBoardingScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const Slide = ({ item }) => {
     return (
       <View style={{ alignItems: "center" }}>
-        <Image
-          source={item.image}
-          style={{ height: "75%", width, resizeMode: "contain" }}
-        />
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.subtitle}>{item.subtitle}</Text>
-      </View>
+      <Image
+        source={item.image}
+        style={{ height: "75%", width, resizeMode: "contain" }}
+      />
+      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.subtitle}>{item.subtitle}</Text>
+    </View>
     );
   };
 
@@ -211,10 +211,10 @@ const styles = StyleSheet.create({
   subtitle: {
     color: COLORS.white,
     fontSize: 13,
-    maxWidth: "70%",
+    maxWidth: "80%", // Adjusted maximum width for the subtitle text
     textAlign: "center",
     lineHeight: 23,
-  },
+} ,
   indicators: {
     height: 2.5,
     width: 10,

@@ -37,11 +37,11 @@ const AppNavigator: React.FC<{}> = () => {
 
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen
+      <Stack.Screen
         name="OnBoarding"
         component={OnBoardingScreen}
         options={{ headerShown: false }}
-      />*/}
+      />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
