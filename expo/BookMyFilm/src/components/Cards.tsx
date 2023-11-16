@@ -1,56 +1,36 @@
-import { StyleSheet, Text, View , Alert, ScrollView , ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { ChatState } from '../context/ChatProvider'
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { COLORS, FONTSIZE } from '../theme/theme';
-import UserListItem from './UserListItem';
 import UserList from './UserList';
 
 const Cards = () => {
+  const [loggedUser, setLoggedUser] = useState('');
+  const [chats, setChats] = useState('');
 
-    const [ loggedUser , setLoggedUser ] = useState('');
-    // const { selectedChat , setSelectedChat , user , chats , setChats } = ChatState();
-    const [ chats , setChats ] = useState([]);
-
-    // function to retrieve all chats
-      // function for accessing the chats
   const fetchChats = async () => {
     try {
-      // accessing the token from AsyncStorage
-      const storedToken = await AsyncStorage.getItem("authToken");
-      // console.log(storedToken);
-      
+      const storedToken = await AsyncStorage.getItem('authToken');
+
       if (storedToken) {
         const config = {
           headers: {
-            "Content-type": "application/json" ,
-            Authorization: `Bearer ${storedToken}`, // Use the token from AsyncStorage
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${storedToken}`,
           },
         };
 
-      // making an api call
-      const { data } = await axios.get(`http://192.168.29.181:8080/api/chat` , config);
-    //   console.log(data);
-      
-      setChats(data)
-      // onclose()
+        const { data } = await axios.get('http://192.168.29.181:8080/api/chat', config);
+        setChats(data);
       }
-
     } catch (error) {
-      Alert.alert('Error Occurred' , 'Failed to load Chats')
+      Alert.alert('Error Occurred', 'Failed to load Chats');
     }
-  }
-
-//   const handleChatSelection = (chatId) => {
-//     // Function to handle chat selection
-//     // You might navigate to a specific chat or perform other actions based on chatId
-//     console.log('Chat selected:', chatId);
-//   };
+  };
 
   useEffect(() => {
     const getLoggedUser = async () => {
-      const userToken: any = await AsyncStorage.getItem('authToken');
+      const userToken = await AsyncStorage.getItem('authToken');
       setLoggedUser(userToken);
     };
 
@@ -58,38 +38,74 @@ const Cards = () => {
     fetchChats();
   }, []);
 
-//   console.log('chats' ,chats);
-  return (
-    <View style = {styles.container}>
-        <View style = {styles.headerText}>
-            <Text style = {styles.text}>My Chats</Text>
-        </View>
-        <View>
-        {chats ? (
-          chats.map((chat) => (
-            <UserList key={chat._id} user={chat} loggedUser={loggedUser} />
-          ))
-    ) : (
-        <ActivityIndicator size="large" color="#00ff00" />
-    )}
-        </View>
-    </View>
-  )
-}
+  // fetching the USERID from async Storage
+  const getLoggedUserID =async () => {
+    try {
+      const storedToken = await AsyncStorage.getItem("loggedUserID");
+      // console.log('jhjkchzjxkc' , storedToken);
+      
 
-export default Cards
+      return storedToken;
+    } catch (error) {
+      console.log(`error fetching the userID of the user from async Storage ${error}` );
+    }
+  }
+
+  const getSenderInfo = async (chat) => {
+    try {
+      const loggedUserID = await getLoggedUserID();
+      console.log('Logged User ID:', loggedUserID);
+      
+      if (!chat.isGroupChat && chat.users.length > 1) {
+        const sender = chat.users.find(user => user._id !== loggedUserID);
+        return sender ? { name: sender.name, email: sender.email } : null;
+      }
+      return null;
+    } catch (error) {
+      console.log('Error getting sender information:', error);
+      return null;
+    }
+  };
+
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.headerText}>
+        <Text style={styles.text}>My Chats</Text>
+      </View>
+      <View>
+      {chats ? (
+  chats.map((chat) => (
+    <UserList
+      key={chat._id}
+      user={chat}
+      loggedUser={loggedUser}
+      senderInfo={getSenderInfo(chat, loggedUser)}
+    />
+  ))
+) : (
+  <ActivityIndicator size="large" color="#00ff00" />
+)}
+    </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container : {
-        // margin : '2%'
-    } ,
-    headerText : {
-        marginTop : '3%' , 
-        justifyContent : 'center' , 
-        alignItems : 'center'
-    } , 
-    text : {
-        color : COLORS.White , 
-        fontSize : FONTSIZE.size_24
-    }
-})
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerText: {
+    marginTop: '3%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});
+
+export default Cards;

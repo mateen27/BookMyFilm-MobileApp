@@ -124,6 +124,12 @@ import * as LocalAuthentication from "expo-local-authentication";
       console.log(response);
       const token = response.data.token;
       // console.log(token);
+
+      const responseJson = JSON.parse(response.request._response);
+      const loggedUserID = responseJson._id;
+      // console.log(loggedUserID);
+      AsyncStorage.setItem("loggedUserID", loggedUserID);
+      
       
       // need access to the async-storage in order to store the token
       AsyncStorage.setItem("authToken", token);

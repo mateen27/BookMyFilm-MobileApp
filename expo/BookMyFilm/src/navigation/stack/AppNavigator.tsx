@@ -38,6 +38,11 @@ const AppNavigator: React.FC<{}> = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="Splash"
+        component={SplashScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="OnBoarding"
         component={OnBoardingScreen}
         options={{ headerShown: false }}
@@ -46,15 +51,10 @@ const AppNavigator: React.FC<{}> = () => {
         name="Login"
         component={LoginScreen}
         options={{ headerShown: false }}
-      /> 
+      />
       <Stack.Screen
         name="SignUp"
         component={SignUp}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Splash"
-        component={SplashScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -92,20 +92,47 @@ const AppNavigator: React.FC<{}> = () => {
         {() => <BottomNavigator navigation={navigation} />}
       </Stack.Screen>
 
-      
-      <Stack.Screen name="WatchTrailer" component={WatchMovie} options={{headerShown : false}}/>
+      <Stack.Screen
+        name="WatchTrailer"
+        component={WatchMovie}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="WatchMovies" component={WatchMovies} options={{headerShown : false}}/>
+      <Stack.Screen
+        name="WatchMovies"
+        component={WatchMovies}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="BookMovie" component={BookTickets} options={{headerShown : false}}/>
+      <Stack.Screen
+        name="BookMovie"
+        component={BookTickets}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Ticket" component={Ticket} options={{headerShown : false}}/>
+      <Stack.Screen
+        name="Ticket"
+        component={Ticket}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="WelcomeRoomScreen" component={WelcomeRoomScreen} options={{headerShown : false}}/>
+      <Stack.Screen
+        name="WelcomeRoomScreen"
+        component={WelcomeRoomScreen}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="Profile" component={Profile} options={{headerShown : false}}/>
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="About" component={About} options={{headerShown : false}}/>
+      <Stack.Screen
+        name="About"
+        component={About}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

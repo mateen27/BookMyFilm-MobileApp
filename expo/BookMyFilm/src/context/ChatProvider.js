@@ -22,7 +22,7 @@ const ChatProvider = ({ children }) => {
         }
         // token is not present
         else {
-          navigation.navigate('Login')
+          navigation.navigate('Splash')
         }
       } catch (error) {
         console.log("error",error);
