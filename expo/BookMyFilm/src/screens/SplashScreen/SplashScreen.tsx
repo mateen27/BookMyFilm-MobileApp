@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View , Image } from 'react-native'
 import React, { useEffect } from 'react'
+import { StatusBar } from 'expo-status-bar';
 
 const Logo = require('../../../images/Logo.png');
 
@@ -14,9 +15,13 @@ const SplashScreen: React.FC<SplashScreenProps> = ({navigation}) => {
         }, 3000);
     } , [])
   return (
+    <>
     <View style = {styles.container}>
       <Image source={Logo} style = {styles.splashImage} resizeMode='contain'/>
     </View>
+
+    <StatusBar style='dark' hidden/>
+    </>
   )
 }
 
@@ -24,7 +29,7 @@ export default SplashScreen
 
 const styles = StyleSheet.create({
   container : {
-    backgroundColor : '#0F0F0F' , 
+    backgroundColor : '#000000' , 
     flex : 1 , 
     alignItems : 'center' , 
     justifyContent : 'center'

@@ -3,6 +3,47 @@
   "results": [
     {
       "adult": false,
+      "backdrop_path": "/kUZE0FYRTVAVtA9NL3lD688GJ9X.jpg",
+      "genre_ids": [
+          28,
+          12,
+          53
+      ],
+      "id": 720557,
+      "firebase_link":"https://firebasestorage.googleapis.com/v0/b/showstarter-9992b.appspot.com/o/VID_20231117_192320_602%5B1%5D.mp4?alt=media&token=4f68e970-ac7b-447f-a781-6197d7ee841e",
+      "original_language": "hi",
+      "original_title": "Tiger 3",
+      "overview": "Following the events of Tiger Zinda Hai, War, and Pathaan, Avinash Singh Rathore returns as Tiger but this time the battle is within. He has to choose between his country or family as an old enemy is after his life, who claims that his family was killed by Tiger. He holds Tiger captive in Pakistan as the Indian agent's loyalty towards his country faces its biggest test.",
+      "popularity": 89.713,
+      "poster_path": "/7wgED7Yx9VLcNWSO91VgwicHmMD.jpg",
+      "release_date": "2023-11-12",
+      "title": "Tiger 3",
+      "video": false,
+      "vote_average": 7.4,
+      "vote_count": 5
+  },
+    {
+      "adult": false,
+      "backdrop_path": "/ukCnSgMvdiJekondpIQMliWWyfx.jpg",
+      "genre_ids": [
+          18
+      ],
+      "id": 1163258,
+      "trailerLink":"WeMJo701mvQ",
+      "firebase_link":"https://firebasestorage.googleapis.com/v0/b/showstarter-9992b.appspot.com/o/12th_Fail_2023_Hindi_480p_HQ_S-Print_x264_AAC_CineVood(2)%5B1%5D.mp4?alt=media&token=61d80dfd-0605-48e4-9ad4-230440b0475b" ,
+      "original_language": "hi",
+      "original_title": "12th Fail",
+      "overview": "Inspired by millions of UPSC students' lives and struggles, the story follows Manoj, who fails his 12th grade. But how he restarts his journey towards his dream of serving the country forms the crux. 12th Fail goes beyond that one exam and looks at the education system in the country while encouraging people not to give up amid failures.",
+      "popularity": 5.275,
+      "poster_path": "/98KWNgcxjdkGaenBS2bKLjZMayZ.jpg",
+      "release_date": "2023-10-27",
+      "title": "12th Fail",
+      "video": false,
+      "vote_average": 8,
+      "vote_count": 2
+    },
+    {
+      "adult": false,
       "backdrop_path": "/iQcCAm8hKWZyUntqrvzyEGtXyJl.jpg",
       "genre_ids": [878, 28, 53],
       "id": 670292,

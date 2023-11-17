@@ -17,6 +17,7 @@ import {
   import TopRatedMovies from '../../data/TopRatedMovies.json';
   import TelguMoviesData from '../../data/TelguMovies.json';
   import TamilMoviesData from '../../data/TamilMovies.json';
+  import BollywoodMovies from '../../data/BollywoodMovies.json';
   
   import React, { useEffect, useState } from "react";
   import HeaderComponent from "../../components/HeaderComponent";
@@ -87,6 +88,15 @@ import {
       throw error;  // Rethrow the error for further handling if needed
     }
   };
+
+  const getBollywoodMovies = async () => {
+    try {
+      return BollywoodMovies;
+    } catch (err) {
+      console.error(`Error while getting Bollywood Movies: ${err}`);
+      throw err;  // Rethrow the error for further handling if needed
+    }
+  };
   
   const StreamMovies: React.FC<{ navigation: any }> = ({ navigation }) => {
     // state variables for the API
@@ -99,10 +109,14 @@ import {
   
     const [topRatedMoviesList, setTopRatedMoviesList] = useState<any>(undefined);
   
-    // for the TV Shows
     const [telguMovies, setTelguMovies] = useState<any>(undefined);
   
     const [tamilMovies, setTamilMovies] = useState<any>(undefined);
+
+    const [bollywoodMovies, setBollywoodMovies] = useState<any>(undefined);
+
+    const [nowPlayingBollywoodMovies, setNowPlayingBollywoodMovies] =
+    useState<any>(undefined);
   
     useEffect(() => {
       const fetchNowPlaying = async () => {
@@ -163,6 +177,22 @@ import {
             `Error while fetching the data inside of the tamil Movies`
           );
         });
+
+        const fetchBollywoodMovies = async () => {
+          try {
+            const BollywoodMovies = await getBollywoodMovies();
+            setNowPlayingBollywoodMovies([
+              { id: "dummy1" },
+              ...BollywoodMovies.results,
+              { id: "dummy2" },
+            ]);
+          } catch (error) {
+            console.error(
+              `Error while fetching the data inside of the Bollywood Movies function`
+            );
+          }
+        };
+        fetchBollywoodMovies();
     }, []);
   
     // console.log('popular Movies',nowPlayingTVShows);
@@ -185,7 +215,11 @@ import {
       telguMovies == undefined &&
       telguMovies == null &&
       tamilMovies == undefined &&
-      tamilMovies == null
+      tamilMovies == null &&
+      bollywoodMovies == null && 
+      bollywoodMovies == undefined &&
+      nowPlayingBollywoodMovies == null &&
+      nowPlayingBollywoodMovies == undefined
     ) {
       return (
         <ScrollView
@@ -356,6 +390,45 @@ import {
               imagePath={baseImageURL("w780", item.poster_path)}
             />
           )}
+        />
+
+<CategoryHeader title={"Bollywood Pick's"} />
+        <FlatList
+          data={nowPlayingBollywoodMovies}
+          keyExtractor={(item: any) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          bounces={false}
+          snapToInterval={width * 0.7 + SPACING.space_36}
+          decelerationRate={0}
+          contentContainerStyle={styles.containerGap36}
+          renderItem={({ item, index }) => {
+            if (!item.original_title) {
+              return (
+                <View
+                  style={{
+                    width: (width - (width * 0.7 + SPACING.space_36 * 2)) / 2,
+                  }}
+                ></View>
+              );
+            }
+            return (
+              <MovieCard
+                shoudlMarginatedAtEnd={true}
+                cardFunction={() => {
+                  navigation.push("MovieDetails", { movieid: item.id });
+                }}
+                cardWidth={width * 0.7}
+                isFirst={index == 0 ? true : false}
+                isLast={index == nowPlayingBollywoodMovies?.length - 1 ? true : false}
+                title={item.original_title}
+                imagePath={baseImageURL("w780", item.poster_path)}
+                genre={item.genre_ids.slice(1, 4)}
+                vote_average={item.vote_average}
+                vote_count={item.vote_count}
+              />
+            );
+          }}
         />
   
         <StatusBar hidden />
